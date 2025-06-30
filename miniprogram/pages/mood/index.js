@@ -130,7 +130,7 @@ Page({
     if (!this.data.isSwiping) return;
     
     const deltaX = e.changedTouches[0].clientX - this.data.startX;
-    const threshold = this.data.windowWidth * 0.4;
+    const threshold = this.data.windowWidth * 0.3;
     
     if (deltaX > threshold) {
       // 向右滑动，切换到上个月

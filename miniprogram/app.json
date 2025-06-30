@@ -3,7 +3,7 @@
     "pages/index/index",
     "pages/focus/index",
     "pages/plan/index",
-    "pages/my/index",
+    "pages/profile/index",
     "pages/schedule/index",
     "pages/mood/index"
   ],
@@ -38,7 +38,7 @@
         "selectedIconPath": "images/index/lion.png"
       },
       {
-        "pagePath": "pages/my/index",
+        "pagePath": "pages/profile/index",
         "text": "我的",
         "iconPath": "images/index/lion.png",
         "selectedIconPath": "images/index/lion.png"

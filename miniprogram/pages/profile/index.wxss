@@ -1,0 +1,103 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  margin-top: 20px;
+}
+
+.avatar {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+}
+
+.username {
+  margin-left: 10px;
+}
+
+.bind-account {
+  background-color: #FF6347;
+  color: white;
+  padding: 5px 10px;
+  border-radius: 5px;
+}
+
+.vip-section {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 90%;
+  margin-top: 20px;
+}
+
+.crown-icon {
+  width: 30px;
+  height: 30px;
+}
+
+.vip-text {
+  font-weight: bold;
+}
+
+.enter-vip {
+  background-color: #8A2BE2;
+  color: white;
+  padding: 5px 10px;
+  border-radius: 5px;
+}
+
+.flower-count {
+  display: flex;
+  align-items: center;
+}
+
+.function-section {
+  width: 90%;
+  margin-top: 20px;
+}
+
+.function-row {
+  display: flex;
+  justify-content: space-around;
+}
+
+.function-item {
+  text-align: center;
+}
+
+.function-icon {
+  width: 40px;
+  height: 40px;
+}
+
+.function-text {
+  margin-top: 5px;
+}
+
+.bottom-nav {
+  display: flex;
+  justify-content: space-around;
+  width: 100%;
+  position: fixed;
+  bottom: 0;
+  background-color: white;
+  padding: 10px 0;
+}
+
+.nav-item {
+  text-align: center;
+}
+
+.nav-icon {
+  width: 30px;
+  height: 30px;
+}
+
+.nav-text {
+  margin-top: 5px;
+}
