@@ -22,26 +22,26 @@
       {
         "pagePath": "pages/index/index",
         "text": "目标",
-        "iconPath": "images/lion.png",
-        "selectedIconPath": "images/lion.png"
+        "iconPath": "images/index/lion.png",
+        "selectedIconPath": "images/index/lion.png"
       },
       {
         "pagePath": "pages/focus/index",
         "text": "专注",
-        "iconPath": "images/lion.png",
-        "selectedIconPath": "images/lion.png"
+        "iconPath": "images/index/lion.png",
+        "selectedIconPath": "images/index/lion.png"
       },
       {
         "pagePath": "pages/plan/index",
         "text": "计划",
-        "iconPath": "images/lion.png",
-        "selectedIconPath": "images/lion.png"
+        "iconPath": "images/index/lion.png",
+        "selectedIconPath": "images/index/lion.png"
       },
       {
         "pagePath": "pages/my/index",
         "text": "我的",
-        "iconPath": "images/lion.png",
-        "selectedIconPath": "images/lion.png"
+        "iconPath": "images/index/lion.png",
+        "selectedIconPath": "images/index/lion.png"
       }
     ]
   }

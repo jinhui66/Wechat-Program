@@ -41,8 +41,8 @@ Page({
       calendarDays: this.generateMonthDays(year, month),
       prevMonth: this.getAdjacentMonth(-1),
       nextMonth: this.getAdjacentMonth(1),
-      prevMonthDays: this.generateMonthDays(this.getAdjacentMonth(-1).year, this.getAdjacentMonth(-1).month, true),
-      nextMonthDays: this.generateMonthDays(this.getAdjacentMonth(1).year, this.getAdjacentMonth(1).month, true)
+      prevMonthDays: this.generateMonthDays(this.getAdjacentMonth(-1).year, this.getAdjacentMonth(-1).month, false),
+      nextMonthDays: this.generateMonthDays(this.getAdjacentMonth(1).year, this.getAdjacentMonth(1).month, false)
     });
     this.loadMoods();
   },
@@ -99,8 +99,8 @@ Page({
     this.setData({
       prevMonth: this.getAdjacentMonth(-1),
       nextMonth: this.getAdjacentMonth(1),
-      prevMonthDays: this.generateMonthDays(this.getAdjacentMonth(-1).year, this.getAdjacentMonth(-1).month, true),
-      nextMonthDays: this.generateMonthDays(this.getAdjacentMonth(1).year, this.getAdjacentMonth(1).month, true)
+      prevMonthDays: this.generateMonthDays(this.getAdjacentMonth(-1).year, this.getAdjacentMonth(-1).month, false),
+      nextMonthDays: this.generateMonthDays(this.getAdjacentMonth(1).year, this.getAdjacentMonth(1).month, false)
     });
   },
 
@@ -125,11 +125,12 @@ Page({
     this.setData({ offsetX: newOffset });
   },
 
+  // 修改后的触摸结束处理
   handleTouchEnd(e) {
     if (!this.data.isSwiping) return;
     
     const deltaX = e.changedTouches[0].clientX - this.data.startX;
-    const threshold = this.data.windowWidth * 0.25;
+    const threshold = this.data.windowWidth * 0.4;
     
     if (deltaX > threshold) {
       // 向右滑动，切换到上个月
@@ -144,30 +145,52 @@ Page({
     
     this.setData({ isSwiping: false });
   },
-
   switchToPrevMonth() {
     const newMonth = this.getAdjacentMonth(-1);
+    
+    // 1. 先无动画切换到目标位置
     this.setData({
-      year: newMonth.year,
-      month: newMonth.month,
-      offsetX: -this.data.windowWidth,
-      transition: 'transform 0.3s ease-out'
-    }, () => {
-      this.initCalendar();
+      offsetX: 0, // 直接定位到上个月视图
+      transition: 'none'
     });
+    
+    // 2. 在下一次渲染周期更新数据和位置
+    setTimeout(() => {
+      this.setData({
+        year: newMonth.year,
+        month: newMonth.month,
+        offsetX: -this.data.windowWidth, // 新月份居中
+        transition: 'transform 0.3s ease-out'
+      }, () => {
+        // 3. 更新日历数据
+        this.initCalendar();
+      });
+    }, 20);
   },
 
   switchToNextMonth() {
     const newMonth = this.getAdjacentMonth(1);
+    
+    // 1. 先无动画切换到目标位置
     this.setData({
-      year: newMonth.year,
-      month: newMonth.month,
-      offsetX: -this.data.windowWidth,
-      transition: 'transform 0.3s ease-out'
-    }, () => {
-      this.initCalendar();
+      offsetX: -this.data.windowWidth * 2, // 直接定位到下个月视图
+      transition: 'none'
     });
+    
+    // 2. 在下一次渲染周期更新数据和位置
+    setTimeout(() => {
+      this.setData({
+        year: newMonth.year,
+        month: newMonth.month,
+        offsetX: -this.data.windowWidth, // 新月份居中
+        transition: 'transform 0.3s ease-out'
+      }, () => {
+        // 3. 更新日历数据
+        this.initCalendar();
+      });
+    }, 20);
   },
+
 
   resetPosition() {
     this.setData({

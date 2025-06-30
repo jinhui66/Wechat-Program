@@ -1,18 +1,18 @@
 Page({
   data: {
     tools: [
-      { name: "课程表", icon: "/images/lion.png" },
-      { name: "打卡组", icon: "/images/lion.png" },
-      { name: "勋章挑战", icon: "/images/lion.png" },
-      { name: "记账", icon: "/images/lion.png" },
-      { name: "YoYo商店", icon: "/images/lion.png" },
-      { name: "睡眠舱", icon: "/images/lion.png" },
-      { name: "闹钟提醒", icon: "/images/lion.png" },
-      { name: "待办清单", icon: "/images/lion.png" },
-      { name: "心情日记", icon: "/images/lion.png" },
-      { name: "小组件", icon: "/images/lion.png" },
-      { name: "小憩区", icon: "/images/lion.png" },
-      { name: "电波室", icon: "/images/lion.png" },
+      { name: "课程表", icon: "/images/index/lion.png" },
+      { name: "打卡组", icon: "/images/index/lion.png" },
+      { name: "勋章挑战", icon: "/images/index/lion.png" },
+      { name: "记账", icon: "/images/index/lion.png" },
+      { name: "YoYo商店", icon: "/images/index/lion.png" },
+      { name: "睡眠舱", icon: "/images/index/lion.png" },
+      { name: "闹钟提醒", icon: "/images/index/lion.png" },
+      { name: "待办清单", icon: "/images/index/lion.png" },
+      { name: "心情日记", icon: "/images/index/mood.png" },
+      { name: "小组件", icon: "/images/index/lion.png" },
+      { name: "小憩区", icon: "/images/index/lion.png" },
+      { name: "电波室", icon: "/images/index/lion.png" },
     ]
   },
 

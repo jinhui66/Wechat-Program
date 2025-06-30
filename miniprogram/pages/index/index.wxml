@@ -1,6 +1,6 @@
 <view class="header">
   <view class="user-icons">
-    <image src="/images/lion.png" class="avatar" />
+    <image src="/images/index/lion.png" class="avatar" />
     <view class="red-dot"></view>
     <button class="add-btn">+</button>
   </view>
@@ -14,7 +14,7 @@
 
 
 <view class="banner">
-  <image src="/images/lion.png"  class="banner-img" />
+  <image src="/images/index/lion.png"  class="banner-img" />
 </view>
 
 <view class="tools">
