@@ -5,13 +5,14 @@
     "pages/plan/index",
     "pages/profile/index",
     "pages/schedule/index",
-    "pages/mood/index"
+    "pages/mood/index",
+    "pages/course/index"
   ],
   "window": {
     "backgroundColor": "#F6F6F6",
     "backgroundTextStyle": "light",
     "navigationBarBackgroundColor": "#F6F6F6",
-    "navigationBarTitleText": "自律小程序",
+    "navigationBarTitleText": "校园陪伴系统",
     "navigationBarTextStyle": "black"
   },
   "sitemapLocation": "sitemap.json",
@@ -21,7 +22,7 @@
     "list": [
       {
         "pagePath": "pages/index/index",
-        "text": "目标",
+        "text": "主页",
         "iconPath": "images/index/lion.png",
         "selectedIconPath": "images/index/lion.png"
       },

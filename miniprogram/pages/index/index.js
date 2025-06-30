@@ -1,7 +1,7 @@
 Page({
   data: {
     tools: [
-      { name: "课程表", icon: "/images/index/lion.png" },
+      { name: "课程表", icon: "/images/index/course.jpg" },
       { name: "打卡组", icon: "/images/index/lion.png" },
       { name: "勋章挑战", icon: "/images/index/lion.png" },
       { name: "记账", icon: "/images/index/lion.png" },
@@ -19,7 +19,7 @@ Page({
   onToolTap(e) {
     const name = e.currentTarget.dataset.name;
     let pageMap = {
-      "课程表": "/pages/schedule/index",
+      "课程表": "/pages/course/index",
       "打卡组": "/pages/punch/index",
       "勋章挑战": "/pages/badge/index",
       "记账": "/pages/bill/index",

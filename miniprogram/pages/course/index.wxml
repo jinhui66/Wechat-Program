@@ -1,0 +1,162 @@
+<view class="container">
+  <view class="header">
+    <text class="title">{{schoolName}}</text>
+    <text class="subtitle">{{semester}}</text>
+  </view>
+
+  <picker mode="selector" range="{{weeks}}" range-key="name" value="{{currentWeekIndex}}" bindchange="changeWeek">
+    <view class="week-picker">
+      当前周：{{weeks[currentWeekIndex].name}}
+    </view>
+  </picker>
+
+  <view class="schedule-container">
+    <!-- 星期标题 -->
+    <view class="weekdays">
+      <view class="weekday" wx:for="{{weekDays}}" wx:key="id">{{item.name}}</view>
+    </view>
+
+    <!-- 早晨课程 1-4节 -->
+    <view class="morning-classes">
+      <view class="time-row" wx:for="{{morningClasses}}" wx:key="index">
+        <text class="time-label">{{index + 1}}</text>
+        <view class="course-cell" wx:for="{{weekDays}}" wx:key="id"
+          data-week="{{currentWeek}}" data-day="{{item.id}}" data-time="{{index + 1}}"
+          bindtap="handleCourseCellTap" bindlongpress="handleCourseLongPress">
+
+          <view wx:if="{{coursesMap[currentWeek] && coursesMap[currentWeek][item.id] && coursesMap[currentWeek][item.id][index+1]}}"
+            class="course-item {{highlightedCourse && highlightedCourse.day === item.id && highlightedCourse.time === index + 1 && highlightedCourse.week === currentWeek ? 'highlight' : ''}}"
+            style="background-color: {{coursesMap[currentWeek][item.id][index+1].color}}">
+            <text class="course-name">{{coursesMap[currentWeek][item.id][index+1].name}}</text>
+            <text class="course-location">{{coursesMap[currentWeek][item.id][index+1].location}}</text>
+          </view>
+        </view>
+      </view>
+    </view>
+
+    <!-- 下午课程 5-8节 -->
+    <view class="afternoon-classes">
+      <view class="time-row" wx:for="{{afternoonClasses}}" wx:key="index">
+        <text class="time-label">{{index + 5}}</text>
+        <view class="course-cell" wx:for="{{weekDays}}" wx:key="id"
+          data-week="{{currentWeek}}" data-day="{{item.id}}" data-time="{{index + 5}}"
+          bindtap="handleCourseCellTap" bindlongpress="handleCourseLongPress">
+
+          <view wx:if="{{coursesMap[currentWeek] && coursesMap[currentWeek][item.id] && coursesMap[currentWeek][item.id][index + 5]}}"
+            class="course-item {{highlightedCourse && highlightedCourse.day === item.id && highlightedCourse.time === index + 5 && highlightedCourse.week === currentWeek ? 'highlight' : ''}}"
+            style="background-color: {{coursesMap[currentWeek][item.id][index + 5].color}}">
+            <text class="course-name">{{coursesMap[currentWeek][item.id][index + 5].name}}</text>
+            <text class="course-location">{{coursesMap[currentWeek][item.id][index + 5].location}}</text>
+          </view>
+        </view>
+      </view>
+    </view>
+
+    <!-- 晚上课程 9-12节 -->
+    <view class="evening-classes">
+      <view class="time-row" wx:for="{{eveningClasses}}" wx:key="index">
+        <text class="time-label">{{index + 9}}</text>
+        <view class="course-cell" wx:for="{{weekDays}}" wx:key="id"
+          data-week="{{currentWeek}}" data-day="{{item.id}}" data-time="{{index + 9}}"
+          bindtap="handleCourseCellTap" bindlongpress="handleCourseLongPress">
+
+          <view wx:if="{{coursesMap[currentWeek] && coursesMap[currentWeek][item.id] && coursesMap[currentWeek][item.id][index + 9]}}"
+            class="course-item {{highlightedCourse && highlightedCourse.day === item.id && highlightedCourse.time === index + 9 && highlightedCourse.week === currentWeek ? 'highlight' : ''}}"
+            style="background-color: {{coursesMap[currentWeek][item.id][index + 9].color}}">
+            <text class="course-name">{{coursesMap[currentWeek][item.id][index + 9].name}}</text>
+            <text class="course-location">{{coursesMap[currentWeek][item.id][index + 9].location}}</text>
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 添加课程按钮 -->
+  <button class="add-course-btn" bindtap="addCourse">添加课程</button>
+
+  <!-- 编辑弹窗 -->
+  <view wx:if="{{showEditModal}}" class="modal-overlay">
+    <view class="modal-content">
+      <view class="modal-header">
+        <text>{{editMode === 'add' ? '添加课程' : '编辑课程'}}</text>
+        <button bindtap="hideEditModal">关闭</button>
+      </view>
+      <view class="modal-body">
+        <input placeholder="课程名" value="{{currentCourse.name}}" bindinput="onCourseNameChange" />
+        <input placeholder="地点" value="{{currentCourse.location}}" bindinput="onLocationChange" />
+        <picker mode="selector" range="{{weekDays}}" range-key="name" value="{{dayIndex}}" bindchange="onDayChange">
+          <view>选择星期：{{weekDays[dayIndex].name}}</view>
+        </picker>
+        <view class="color-picker">
+          <view wx:for="{{colors}}" wx:key="value" class="color-box" style="background-color: {{item.value}}" bindtap="selectColor" data-index="{{index}}">
+            <view wx:if="{{currentCourse.color === item.value}}" class="color-selected"></view>
+          </view>
+        </view>
+        <button bindtap="openWeekRangePicker">选择周次范围</button>
+        <text>当前周次范围：{{selectedWeekRange[0]}} - {{selectedWeekRange[1]}}</text>
+
+        <button bindtap="openClassRangePicker">选择节次范围</button>
+        <text>当前节次范围：{{selectedClassRange[0]}} - {{selectedClassRange[1]}}</text>
+
+        <button bindtap="confirmCourseAction">{{editMode === 'add' ? '添加' : '保存'}}</button>
+      </view>
+    </view>
+  </view>
+
+  <!-- 周次范围选择弹窗 -->
+  <view wx:if="{{showWeekRangePicker}}" class="picker-modal">
+    <view>
+      <picker mode="selector" range="{{weekRange}}" value="{{tempWeekRange[0] - 1}}" bindchange="updateWeekRangeStart">
+        <view>开始周：{{tempWeekRange[0]}}</view>
+      </picker>
+      <picker mode="selector" range="{{weekRange}}" value="{{tempWeekRange[1] - 1}}" bindchange="updateWeekRangeEnd">
+        <view>结束周：{{tempWeekRange[1]}}</view>
+      </picker>
+      <button bindtap="confirmWeekRange">确定</button>
+      <button bindtap="cancelWeekRange">取消</button>
+    </view>
+  </view>
+
+  <!-- 节次范围选择弹窗 -->
+  <view wx:if="{{showClassRangePicker}}" class="picker-modal">
+    <view>
+      <picker mode="selector" range="{{classTimes}}" value="{{tempClassRange[0] - 1}}" bindchange="updateClassRangeStart">
+        <view>开始节次：{{tempClassRange[0]}}</view>
+      </picker>
+      <picker mode="selector" range="{{classTimes}}" value="{{tempClassRange[1] - 1}}" bindchange="updateClassRangeEnd">
+        <view>结束节次：{{tempClassRange[1]}}</view>
+      </picker>
+      <button bindtap="confirmClassRange">确定</button>
+      <button bindtap="cancelClassRange">取消</button>
+    </view>
+  </view>
+
+  <!-- 删除选项弹窗 -->
+  <view wx:if="{{showDeleteOptions}}" class="modal-overlay">
+    <view class="modal-content">
+      <view class="modal-header">
+        <text>选择删除的课程</text>
+        <button bindtap="hideDeleteOptions">关闭</button>
+      </view>
+      <view class="modal-body">
+        <block wx:for="{{deleteOptions}}" wx:key="index">
+          <button bindtap="deleteSpecificCourse" data-week="{{item.week}}" data-time="{{item.time}}">{{item.label}}</button>
+        </block>
+      </view>
+    </view>
+  </view>
+
+  <!-- 课程操作弹窗 -->
+  <view wx:if="{{showActionModal}}" class="modal-overlay">
+    <view class="modal-content">
+      <view class="modal-header">
+        <text>课程操作</text>
+        <button bindtap="hideActionModal">关闭</button>
+      </view>
+      <view class="modal-body">
+        <button bindtap="prepareEditCourse">编辑课程</button>
+        <button bindtap="prepareDeleteCourse">删除课程</button>
+      </view>
+    </view>
+  </view>
+</view>
