@@ -9,7 +9,7 @@ Page({
       { name: "睡眠舱", icon: "/images/index/lion.png" },
       { name: "闹钟提醒", icon: "/images/index/lion.png" },
       { name: "待办清单", icon: "/images/index/lion.png" },
-      { name: "心情日记", icon: "/images/index/mood.png" },
+      { name: "每日心情", icon: "/images/index/mood.png" },
       { name: "小组件", icon: "/images/index/lion.png" },
       { name: "小憩区", icon: "/images/index/lion.png" },
       { name: "电波室", icon: "/images/index/lion.png" },
@@ -27,7 +27,7 @@ Page({
       "睡眠舱": "/pages/sleep/index",
       "闹钟提醒": "/pages/alarm/index",
       "待办清单": "/pages/todo/index",
-      "心情日记": "/pages/mood/index",
+      "每日心情": "/pages/mood/index",
       "小组件": "/pages/widget/index",
       "小憩区": "/pages/rest/index",
       "电波室": "/pages/wave/index"
