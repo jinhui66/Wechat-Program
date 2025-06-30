@@ -1,7 +1,9 @@
 {
   "pages": [
     "pages/index/index",
-    "pages/example/index"
+    "pages/focus/index",
+    "pages/plan/index",
+    "pages/my/index"
   ],
   "window": {
     "backgroundColor": "#F6F6F6",
@@ -12,5 +14,33 @@
   },
   "sitemapLocation": "sitemap.json",
   "style": "v2",
-  "lazyCodeLoading": "requiredComponents"
+  "lazyCodeLoading": "requiredComponents",
+  "tabBar": {
+    "list": [
+      {
+        "pagePath": "pages/index/index",
+        "text": "目标",
+        "iconPath": "images/lion.png",
+        "selectedIconPath": "images/lion.png"
+      },
+      {
+        "pagePath": "pages/focus/index",
+        "text": "专注",
+        "iconPath": "images/lion.png",
+        "selectedIconPath": "images/lion.png"
+      },
+      {
+        "pagePath": "pages/plan/index",
+        "text": "计划",
+        "iconPath": "images/lion.png",
+        "selectedIconPath": "images/lion.png"
+      },
+      {
+        "pagePath": "pages/my/index",
+        "text": "我的",
+        "iconPath": "images/lion.png",
+        "selectedIconPath": "images/lion.png"
+      }
+    ]
+  }
 }
