@@ -40,8 +40,8 @@
       {
         "pagePath": "pages/profile/index",
         "text": "我的",
-        "iconPath": "images/index/lion.png",
-        "selectedIconPath": "images/index/lion.png"
+        "iconPath": "images/index/profile.png",
+        "selectedIconPath": "images/index/profile.png"
       }
     ]
   }
