@@ -27,7 +27,7 @@ Page({
       "睡眠舱": "/pages/sleep/index",
       "闹钟提醒": "/pages/alarm/index",
       "待办清单": "/pages/todo/index",
-      "心情日记": "/pages/diary/index",
+      "心情日记": "/pages/mood/index",
       "小组件": "/pages/widget/index",
       "小憩区": "/pages/rest/index",
       "电波室": "/pages/wave/index"
