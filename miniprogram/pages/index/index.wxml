@@ -1,7 +1,6 @@
 <view class="header">
-  <text class="time">08:38</text>
   <view class="user-icons">
-    <image src="/assets/avatar.png" class="avatar" />
+    <image src="/images/lion.png" class="avatar" />
     <view class="red-dot"></view>
     <button class="add-btn">+</button>
   </view>
@@ -13,28 +12,22 @@
   <text class="date-item">明天</text>
 </view>
 
-<view class="punch-list">
-  <view class="punch-item">
-    <image src="/assets/sleep.png" class="icon" />
-    <text>早睡早起</text>
-    <image src="/assets/check.png" class="check-icon" />
-  </view>
-</view>
 
 <view class="banner">
-  <image src="/assets/banner.jpg" class="banner-img" />
+  <image src="/images/lion.png"  class="banner-img" />
 </view>
 
 <view class="tools">
-  <view class="tool-item" wx:for="{{tools}}" wx:key="name">
+  <view 
+    class="tool-item" 
+    wx:for="{{tools}}" 
+    wx:key="name" 
+    bindtap="onToolTap" 
+    data-name="{{item.name}}"
+  >
     <image src="{{item.icon}}" class="tool-icon" />
-    <text>{{item.name}}</text>
+    <text class="tool-text">{{item.name}}</text>
   </view>
 </view>
 
-<view class="tab-bar">
-  <view class="tab-item" wx:for="{{tabs}}" wx:key="name">
-    <image src="{{item.icon}}" />
-    <text>{{item.name}}</text>
-  </view>
-</view>
+

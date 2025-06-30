@@ -1,4 +1,4 @@
-// pages/example/indexs.js
+// pages/schedule/index.js
 Page({
 
   /**

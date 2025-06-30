@@ -77,15 +77,26 @@
   height: 60rpx;
 }
 
-.tab-bar {
-  position: fixed;
-  bottom: 0;
-  width: 100%;
-  background: #dfe9ce;
-  display: flex;
-  justify-content: space-around;
-  padding: 10rpx 0;
-}
+/* 通用垂直排列样式 */
+.tool-item,
 .tab-item {
-  text-align: center;
+  display: flex;
+  flex-direction: column;  /* 关键点：垂直排列 */
+  align-items: center;     /* 居中对齐 */
+  justify-content: center;
+  padding: 10rpx;
+}
+
+/* 可选：图片和文字样式 */
+.tool-icon,
+.tab-icon {
+  width: 60rpx;
+  height: 60rpx;
+  margin-bottom: 10rpx;
+}
+
+.tool-text,
+.tab-text {
+  font-size: 24rpx;
+  color: #333;
 }

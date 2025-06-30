@@ -3,13 +3,14 @@
     "pages/index/index",
     "pages/focus/index",
     "pages/plan/index",
-    "pages/my/index"
+    "pages/my/index",
+    "pages/schedule/index"
   ],
   "window": {
     "backgroundColor": "#F6F6F6",
     "backgroundTextStyle": "light",
     "navigationBarBackgroundColor": "#F6F6F6",
-    "navigationBarTitleText": "云开发 QuickStart",
+    "navigationBarTitleText": "自律系统",
     "navigationBarTextStyle": "black"
   },
   "sitemapLocation": "sitemap.json",
