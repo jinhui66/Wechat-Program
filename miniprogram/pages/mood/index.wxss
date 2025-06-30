@@ -1,44 +1,121 @@
-.container {
-  padding: 20px;
+.calendar-container {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  position: relative;
 }
 
-.date-title {
-  font-size: 20px;
+.slider {
+  display: flex;
+  flex-direction: row;
+  width: 300%;
+  height: 100%;
+}
+
+.month {
+  flex-shrink: 0;
+  padding: 15px;
+  box-sizing: border-box;
+}
+
+.month.current {
+  background: #fff;
+}
+
+.header {
+  font-size: 18px;
   font-weight: bold;
-  margin-bottom: 10px;
+  margin-bottom: 15px;
   text-align: center;
 }
 
-.calendar-header, .calendar-body {
-  display: grid;
-  grid-template-columns: repeat(7, 1fr);
-  gap: 5px;
-  text-align: center;
+.days {
+  display: flex;
+  flex-wrap: wrap;
 }
 
-.day-of-week {
-  font-weight: bold;
-  padding: 12px;
+.day-header, .day {
+  width: 14.28%;
+  aspect-ratio: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
 }
 
-.day-cell {
-  padding: 10px;
-  border: 1px solid #ddd;
-  border-radius: 8px;
-}
-
-.day-cell.today {
-  background-color: #4a90e2;
-  color: white;
-}
-.day-number {
-  font-size: 16px;
+.day-header {
   font-weight: bold;
 }
 
-.day-detail {
+.day {
+  position: relative;
+  border-radius: 50%;
+}
+
+.day.today {
+  background: #e6f7ff;
+  font-weight: bold;
+}
+
+.day .mood {
   font-size: 12px;
-  color: #666;
+  margin-top: 2px;
+}
+
+.empty {
+  visibility: hidden;
+}
+
+.indicator {
+  position: absolute;
+  bottom: 10px;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+}
+
+.dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #ddd;
+}
+
+.dot.active {
+  background: #1890ff;
+}
+
+/* 心情选择弹窗样式 */
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0,0,0,0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 100;
+}
+
+.modal-content {
+  background: #fff;
+  width: 80%;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.mood-option {
+  padding: 15px;
+  text-align: center;
+  border-bottom: 1px solid #eee;
+}
+
+.mood-option:last-child {
+  border-bottom: none;
 }
 .bottom-info {
   display: flex;
@@ -82,3 +159,4 @@
   align-items: center;
   justify-content: center;
 }
+

@@ -1,58 +1,220 @@
 Page({
   data: {
-    year: 0,
-    month: 0,
+    year: new Date().getFullYear(),
+    month: new Date().getMonth() + 1,
+    daysOfWeek: ['日', '一', '二', '三', '四', '五', '六'],
+    moods: ['😊 开心', '😢 悲伤', '😴 困倦', '😡 生气', '😌 平静', '无心情'],
+    
+    // 滑动相关
+    windowWidth: 375,
+    offsetX: -375,
+    isSwiping: false,
+    startX: 0,
+    transition: 'none',
+    
+    // 日历数据
     calendarDays: [],
-    daysOfWeek: ['日', '一', '二', '三', '四', '五', '六']
+    prevMonth: {},
+    nextMonth: {},
+    prevMonthDays: [],
+    nextMonthDays: [],
+    
+    // 心情选择
+    showMoodDialog: false,
+    selectedDate: null,
+    dayMoods: {}
   },
 
   onLoad() {
-    const date = new Date();
-    const year = date.getFullYear();
-    const month = date.getMonth() + 1; // JavaScript 的月份从0开始计算，所以需要加1
-
-    this.setData({ year, month });
-    this.generateCalendar(year, month);
+    const { windowWidth } = wx.getSystemInfoSync();
+    this.setData({ 
+      windowWidth,
+      offsetX: -windowWidth 
+    }, () => {
+      this.initCalendar();
+    });
   },
 
-  generateCalendar(year, month) {
-    const firstDay = new Date(year, month - 1, 1); // 当月第一天
-    const lastDateOfTheMonth = new Date(year, month, 0).getDate(); // 当月最后一天的日期
-    const startDay = firstDay.getDay(); // 当月第一天是星期几
+  initCalendar() {
+    const { year, month } = this.data;
+    this.setData({
+      calendarDays: this.generateMonthDays(year, month),
+      prevMonth: this.getAdjacentMonth(-1),
+      nextMonth: this.getAdjacentMonth(1),
+      prevMonthDays: this.generateMonthDays(this.getAdjacentMonth(-1).year, this.getAdjacentMonth(-1).month, true),
+      nextMonthDays: this.generateMonthDays(this.getAdjacentMonth(1).year, this.getAdjacentMonth(1).month, true)
+    });
+    this.loadMoods();
+  },
+
+  generateMonthDays(year, month, isPreview = false) {
+    const firstDay = new Date(year, month - 1, 1);
+    const lastDay = new Date(year, month, 0);
+    const startDay = firstDay.getDay();
+    const daysInMonth = lastDay.getDate();
     const today = new Date();
-    const currentYear = today.getFullYear();
-    const currentMonth = today.getMonth() + 1;
-    const currentDay = today.getDate();
-
-    let calendarDays = [];
-
-    // 填充上个月末尾的空白天数
+    
+    let days = [];
+    
+    // 填充空白格
     for (let i = 0; i < startDay; i++) {
-      calendarDays.push({ number: '', isToday: false });
+      days.push({ number: '' });
     }
-
-    // 添加本月的每一天
-    for (let day = 1; day <= lastDateOfTheMonth; day++) {
-      const isToday = year === currentYear && month === currentMonth && day === currentDay;
-
-      calendarDays.push({
+    
+    // 填充日期
+    const maxDay = isPreview ? Math.min(7, daysInMonth) : daysInMonth;
+    for (let day = 1; day <= maxDay; day++) {
+      const isToday = !isPreview && 
+                     year === today.getFullYear() && 
+                     month === today.getMonth() + 1 && 
+                     day === today.getDate();
+      
+      days.push({
         number: day,
-        isToday: isToday
+        isToday,
+        date: `${year}-${month}-${day}`,
+        mood: isPreview ? '' : (this.data.dayMoods[`${year}-${month}-${day}`] || '')
       });
     }
-
-    this.setData({ calendarDays });
+    
+    return days;
   },
 
-  // 简化农历转换函数（仅供演示）
-  getLunar(year, month, day) {
-    const lunarDays = [
-      '初一', '初二', '初三', '初四', '初五', '初六',
-      '初七', '初八', '初九', '初十', '十一', '十二',
-      '十三', '十四', '十五', '十六', '十七', '十八',
-      '十九', '二十', '廿一', '廿二', '廿三', '廿四',
-      '廿五', '廿六', '廿七', '廿八', '廿九', '三十'
-    ];
-    return lunarDays[(day + 5) % 30];
+  getAdjacentMonth(step) {
+    let { year, month } = this.data;
+    month += step;
+    
+    if (month > 12) {
+      month = 1;
+      year++;
+    } else if (month < 1) {
+      month = 12;
+      year--;
+    }
+    
+    return { year, month };
+  },
+
+  prepareAdjacentMonths() {
+    this.setData({
+      prevMonth: this.getAdjacentMonth(-1),
+      nextMonth: this.getAdjacentMonth(1),
+      prevMonthDays: this.generateMonthDays(this.getAdjacentMonth(-1).year, this.getAdjacentMonth(-1).month, true),
+      nextMonthDays: this.generateMonthDays(this.getAdjacentMonth(1).year, this.getAdjacentMonth(1).month, true)
+    });
+  },
+
+  // 修改后的触摸事件处理
+  handleTouchStart(e) {
+    this.setData({
+      startX: e.touches[0].clientX,
+      isSwiping: true,
+      transition: 'none'
+    });
+  },
+
+  handleTouchMove(e) {
+    if (!this.data.isSwiping) return;
+    
+    const deltaX = e.touches[0].clientX - this.data.startX;
+    let newOffset = -this.data.windowWidth + deltaX;
+    
+    // 边界检查
+    newOffset = Math.max(-this.data.windowWidth * 2, Math.min(newOffset, 0));
+    
+    this.setData({ offsetX: newOffset });
+  },
+
+  handleTouchEnd(e) {
+    if (!this.data.isSwiping) return;
+    
+    const deltaX = e.changedTouches[0].clientX - this.data.startX;
+    const threshold = this.data.windowWidth * 0.25;
+    
+    if (deltaX > threshold) {
+      // 向右滑动，切换到上个月
+      this.switchToPrevMonth();
+    } else if (deltaX < -threshold) {
+      // 向左滑动，切换到下个月
+      this.switchToNextMonth();
+    } else {
+      // 未达到阈值，回弹到当前月份
+      this.resetPosition();
+    }
+    
+    this.setData({ isSwiping: false });
+  },
+
+  switchToPrevMonth() {
+    const newMonth = this.getAdjacentMonth(-1);
+    this.setData({
+      year: newMonth.year,
+      month: newMonth.month,
+      offsetX: -this.data.windowWidth,
+      transition: 'transform 0.3s ease-out'
+    }, () => {
+      this.initCalendar();
+    });
+  },
+
+  switchToNextMonth() {
+    const newMonth = this.getAdjacentMonth(1);
+    this.setData({
+      year: newMonth.year,
+      month: newMonth.month,
+      offsetX: -this.data.windowWidth,
+      transition: 'transform 0.3s ease-out'
+    }, () => {
+      this.initCalendar();
+    });
+  },
+
+  resetPosition() {
+    this.setData({
+      offsetX: -this.data.windowWidth,
+      transition: 'transform 0.3s ease-out'
+    });
+  },
+
+  // 心情选择功能保持不变
+  handleDayTap(e) {
+    const date = e.currentTarget.dataset.date;
+    if (!date) return;
+    
+    this.setData({
+      showMoodDialog: true,
+      selectedDate: date
+    });
+  },
+
+  selectMood(e) {
+    const index = e.currentTarget.dataset.index;
+    const mood = this.data.moods[index];
+    const { selectedDate } = this.data;
+    
+    const newDayMoods = { ...this.data.dayMoods };
+    
+    if (mood === '无心情') {
+      delete newDayMoods[selectedDate];
+    } else {
+      newDayMoods[selectedDate] = mood;
+    }
+    
+    this.setData({
+      dayMoods: newDayMoods,
+      showMoodDialog: false
+    }, () => {
+      this.saveMoods();
+      this.initCalendar();
+    });
+  },
+
+  loadMoods() {
+    const moods = wx.getStorageSync('dayMoods') || {};
+    this.setData({ dayMoods: moods });
+  },
+
+  saveMoods() {
+    wx.setStorageSync('dayMoods', this.data.dayMoods);
   }
 });
