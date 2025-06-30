@@ -1,21 +1,20 @@
-
+<!-- pages/calendar/calendar.wxml -->
 <view class="container">
-  <!-- 返回按钮 -->
-  <navigator open-type="navigateBack" class="back-icon"></navigator>
+  <view class="container">
+  <!-- 显示年月 -->
+  <view class="date-title">{{year}}年{{month}}月</view>
 
-  <!-- 年月显示 -->
-  <view class="date-display">
-    <text class="year">{{year}}</text>
-    <text class="month">{{month}}月</text>
-  </view>
-
-  <!-- 日历网格 -->
-  <view class="calendar-grid">
-    <view wx:for="{{days}}" wx:key="index" class="day-cell">
-      <view class="day-number">{{item}}</view>
-    </view>
-  </view>
-
-  <!-- 添加按钮 -->
-  <button class="add-button">+</button>
+<view class="calendar-header">
+  <view wx:for="{{daysOfWeek}}" wx:key="index" class="day-of-week">{{item}}</view>
 </view>
+
+<view class="calendar-body">
+  <view wx:for="{{calendarDays}}" wx:key="index" class="day-cell {{item.isToday ? 'today' : ''}}">
+    <text>{{item.number}}</text>
+  </view>
+</view>
+
+</view>
+
+
+

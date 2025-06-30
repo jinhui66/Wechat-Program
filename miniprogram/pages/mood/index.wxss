@@ -1,64 +1,84 @@
-/* pages/mood/index.wxss */
-
 .container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
   padding: 20px;
-  background-color: #f8ebea;
 }
 
-.back-icon {
-  position: absolute;
-  top: 20px;
-  left: 20px;
+.date-title {
+  font-size: 20px;
+  font-weight: bold;
+  margin-bottom: 10px;
+  text-align: center;
 }
 
-.date-display {
-  margin-bottom: 20px;
-}
-
-.year, .month {
-  font-size: 24px;
-  color: #666;
-}
-
-.month {
-  color: #ff6b6b;
-}
-
-.calendar-grid {
+.calendar-header, .calendar-body {
   display: grid;
   grid-template-columns: repeat(7, 1fr);
-  gap: 10px;
+  gap: 5px;
+  text-align: center;
+}
+
+.day-of-week {
+  font-weight: bold;
+  padding: 12px;
 }
 
 .day-cell {
-  width: 50px;
-  height: 50px;
-  border: 1px solid #ccc;
-  border-radius: 50%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
 }
 
+.day-cell.today {
+  background-color: #4a90e2;
+  color: white;
+}
 .day-number {
   font-size: 16px;
+  font-weight: bold;
+}
+
+.day-detail {
+  font-size: 12px;
   color: #666;
+}
+.bottom-info {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+
+.alert-box {
+  background-color: #f0f0f0;
+  padding: 20px;
+  margin-top: 20px;
+}
+
+.alert-icon {
+  width: 20px;
+  height: 20px;
+  margin-right: 10px;
+}
+
+.alert-buttons {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.subscription {
+  margin-top: 20px;
+}
+
+.subscription-item {
+  display: flex;
+  align-items: center;
 }
 
 .add-button {
-  position: fixed;
-  bottom: 20px;
-  right: 20px;
-  width: 60px;
-  height: 60px;
-  border-radius: 50%;
-  background-color: #9c6d5d;
+  background-color: #4a90e2;
   color: white;
-  font-size: 24px;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
   display: flex;
-  justify-content: center;
   align-items: center;
+  justify-content: center;
 }
