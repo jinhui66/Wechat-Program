@@ -151,7 +151,7 @@ Page({
     // 1. 先无动画切换到目标位置
     this.setData({
       offsetX: 0, // 直接定位到上个月视图
-      transition: 'none'
+      transition: 'transform 0.3s ease-out'
     });
     
     // 2. 在下一次渲染周期更新数据和位置
@@ -160,36 +160,35 @@ Page({
         year: newMonth.year,
         month: newMonth.month,
         offsetX: -this.data.windowWidth, // 新月份居中
-        transition: 'transform 0.3s ease-out'
+        transition: 'none'
       }, () => {
         // 3. 更新日历数据
         this.initCalendar();
       });
-    }, 20);
+    }, 300);
   },
-
   switchToNextMonth() {
-    const newMonth = this.getAdjacentMonth(1);
-    
-    // 1. 先无动画切换到目标位置
+    // 先设置动画滑动到右侧
     this.setData({
-      offsetX: -this.data.windowWidth * 2, // 直接定位到下个月视图
-      transition: 'none'
+      offsetX: -this.data.windowWidth * 2,
+      transition: 'transform 0.3s ease-out'
     });
-    
-    // 2. 在下一次渲染周期更新数据和位置
+  
+    // 等动画完成后更新月份
     setTimeout(() => {
+      const newMonth = this.getAdjacentMonth(1);
+  
       this.setData({
         year: newMonth.year,
         month: newMonth.month,
-        offsetX: -this.data.windowWidth, // 新月份居中
-        transition: 'transform 0.3s ease-out'
+        transition: 'none',
+        offsetX: -this.data.windowWidth // 重置为中间位置，无动画
       }, () => {
-        // 3. 更新日历数据
         this.initCalendar();
       });
-    }, 20);
+    }, 300); // 等待动画时间结束
   },
+  
 
 
   resetPosition() {
