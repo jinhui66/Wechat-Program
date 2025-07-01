@@ -25,6 +25,28 @@ Page({
     dayMoods: {}
   },
 
+  goToToday() {
+    const today = new Date();
+    const currentYear = today.getFullYear();
+    const currentMonth = today.getMonth() + 1;
+    
+    // 如果已经是当前月份，只需滚动到中间位置
+    if (this.data.year === currentYear && this.data.month === currentMonth) {
+      this.resetPosition();
+      return;
+    }
+    
+    // 更新到当前月份
+    this.setData({
+      year: currentYear,
+      month: currentMonth,
+      offsetX: -this.data.windowWidth,
+      transition: 'transform 0.3s ease-out'
+    }, () => {
+      this.initCalendar();
+    });
+  },
+
   onLoad() {
     const { windowWidth } = wx.getSystemInfoSync();
     this.setData({ 
