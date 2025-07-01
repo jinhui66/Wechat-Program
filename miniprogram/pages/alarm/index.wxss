@@ -1,0 +1,66 @@
+/* 紧凑容器 */
+.compact-container {
+    padding: 20rpx;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  /* 时间显示 */
+  .compact-time {
+    font-size: 64rpx;  /* 比原来缩小20% */
+    margin: 30rpx 0 10rpx;
+    font-weight: bold;
+  }
+  
+  .compact-status {
+    font-size: 24rpx;
+    color: #666;
+    margin-bottom: 40rpx;
+  }
+  
+  /* 设置区域 */
+  .compact-settings {
+    width: 80%;
+    margin-bottom: 30rpx;
+  }
+  
+  .compact-setting {
+    margin-bottom: 25rpx;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .compact-adjust {
+    display: flex;
+    align-items: center;
+  }
+  
+  .compact-btn {
+    width: 60rpx;
+    height: 60rpx;
+    font-size: 32rpx;
+    line-height: 60rpx;
+    margin: 0 15rpx;
+    border: 1rpx solid #ddd;
+    background: #f8f8f8;
+  }
+  
+  .compact-value {
+    min-width: 80rpx;
+    text-align: center;
+    font-size: 32rpx;
+  }
+  
+  /* 控制按钮 */
+  .compact-control-btn {
+    width: 70%;
+    height: 80rpx;
+    line-height: 80rpx;
+    font-size: 32rpx;
+    border-radius: 40rpx;
+    background: #07C160;
+    color: white;
+    margin-top: 30rpx;
+  }

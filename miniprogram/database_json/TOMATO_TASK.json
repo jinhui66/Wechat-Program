@@ -1,0 +1,20 @@
+
+    {
+      "_id": "task001",
+      "user_id": "user123",
+      "task_name": "完成数学作业",
+      "task_desc": "完成第三章习题",
+      "estimate_tomato": 3,
+      "priority": 2,
+      "create_time": "2023-06-15T14:00:00Z",
+      "status": 1,
+      "records": [
+        {
+          "record_id": "record001",
+          "start_time": "2023-06-15T14:30:00Z",
+          "end_time": "2023-06-15T14:55:00Z",
+          "status": 1,
+          "note": "效率很高"
+        }
+      ]
+    }

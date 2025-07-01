@@ -1,0 +1,10 @@
+
+    {
+      "_id": "stat001",
+      "PCid": 101,
+      "Uid": "user123",
+      "PStotal": 15,
+      "PScontinuous": 7,
+      "PSmax": 30
+    }
+

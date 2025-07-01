@@ -1,0 +1,31 @@
+<view class="compact-container">
+  <!-- 时间显示 -->
+  <view class="compact-time">{{currentTime}}</view>
+  <view class="compact-status">{{statusText}}</view>
+
+  <!-- 时间设置 -->
+  <view class="compact-settings">
+    <view class="compact-setting">
+      <text>专注时长（分钟）</text>
+      <view class="compact-adjust">
+        <button class="compact-btn" bindtap="decreaseWorkTime">-</button>
+        <text class="compact-value">{{workTime}}</text>
+        <button class="compact-btn" bindtap="increaseWorkTime">+</button>
+      </view>
+    </view>
+
+    <view class="compact-setting">
+      <text>休息时长（分钟）</text>
+      <view class="compact-adjust">
+        <button class="compact-btn" bindtap="decreaseRestTime">-</button>
+        <text class="compact-value">{{restTime}}</text>
+        <button class="compact-btn" bindtap="increaseRestTime">+</button>
+      </view>
+    </view>
+  </view>
+
+  <!-- 控制按钮 -->
+  <button class="compact-control-btn" bindtap="toggleTimer">
+    {{btnText}}
+  </button>
+</view>

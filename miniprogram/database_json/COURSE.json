@@ -1,0 +1,19 @@
+
+    {
+      "_id": "course001",
+      "course_name": "高等数学",
+      "teacher": "张教授",
+      "location": "理学楼201",
+      "credit": 4.5,
+      "description": "微积分与线性代数基础课程",
+      "schedules": [
+        {
+          "schedule_id": 1,
+          "week_day": 1,
+          "start_time": "08:00:00",
+          "end_time": "09:30:00",
+          "week_range": "1-16",
+          "is_odd_even": 0
+        }
+      ]
+    }

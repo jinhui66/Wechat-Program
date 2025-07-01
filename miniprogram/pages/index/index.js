@@ -7,7 +7,7 @@ Page({
       { name: "记账", icon: "/images/index/lion.png" },
       { name: "YoYo商店", icon: "/images/index/lion.png" },
       { name: "睡眠舱", icon: "/images/index/lion.png" },
-      { name: "闹钟提醒", icon: "/images/index/lion.png" },
+      { name: "闹钟提醒", icon: "/images/index/alarm.jpg" },
       { name: "待办清单", icon: "/images/index/lion.png" },
       { name: "每日心情", icon: "/images/index/mood.png" },
       { name: "小组件", icon: "/images/index/lion.png" },

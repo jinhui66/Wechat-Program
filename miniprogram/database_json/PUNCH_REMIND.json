@@ -1,0 +1,9 @@
+
+    {
+      "PMid": 1,
+      "PCid": 101,
+      "PMtype": 2,
+      "PMtime": "08:30:00",
+      "PMdays": "1,3,5",
+      "PMbefore": 30
+    }
