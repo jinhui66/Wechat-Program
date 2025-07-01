@@ -1,7 +1,6 @@
 {
   "pages": [
     "pages/index/index",
-    "pages/focus/index",
     "pages/plan/index",
     "pages/profile/index",
     "pages/schedule/index",
@@ -24,12 +23,6 @@
       {
         "pagePath": "pages/index/index",
         "text": "主页",
-        "iconPath": "images/index/lion.png",
-        "selectedIconPath": "images/index/lion.png"
-      },
-      {
-        "pagePath": "pages/focus/index",
-        "text": "专注",
         "iconPath": "images/index/lion.png",
         "selectedIconPath": "images/index/lion.png"
       },
