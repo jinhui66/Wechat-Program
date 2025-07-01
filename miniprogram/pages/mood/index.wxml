@@ -1,4 +1,5 @@
 <view class="calendar-container">
+  <view class="go-today" bindtap="goToToday">前往当月</view>
   <!-- 滑动容器 -->
   <view class="slider"
         bindtouchstart="handleTouchStart"
