@@ -1,102 +1,87 @@
-.header {
-  display: flex;
-  justify-content: space-between;
-  padding: 10rpx;
-}
-.time {
-  font-size: 30rpx;
-}
-.avatar {
-  width: 60rpx;
-  height: 60rpx;
-  border-radius: 50%;
-}
-.red-dot {
-  width: 16rpx;
-  height: 16rpx;
-  background: red;
-  border-radius: 50%;
-  position: absolute;
-  top: 0;
-  right: 0;
-}
-.add-btn {
-  font-size: 36rpx;
-}
-
-.date-tab {
-  display: flex;
-  justify-content: space-around;
-  margin-top: 20rpx;
-}
-.date-item {
-  padding: 10rpx;
-}
-.active {
-  color: #fff;
-  background-color: #f6c0cb;
-  border-radius: 10rpx;
-}
-
-.punch-list {
-  padding: 20rpx;
-}
-.punch-item {
-  display: flex;
-  align-items: center;
-}
-.icon {
-  width: 50rpx;
-  height: 50rpx;
-  margin-right: 20rpx;
-}
-.check-icon {
-  width: 30rpx;
-  height: 30rpx;
-  margin-left: auto;
-}
-
-.banner-img {
-  width: 100%;
-  height: 150rpx;
-  margin: 20rpx 0;
-}
-
-.tools {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-around;
-}
-.tool-item {
-  width: 25%;
-  text-align: center;
-  padding: 20rpx 0;
-}
-.tool-icon {
-  width: 60rpx;
-  height: 60rpx;
-}
-
-/* 通用垂直排列样式 */
-.tool-item,
-.tab-item {
-  display: flex;
-  flex-direction: column;  /* 关键点：垂直排列 */
-  align-items: center;     /* 居中对齐 */
-  justify-content: center;
-  padding: 10rpx;
-}
-
-/* 可选：图片和文字样式 */
-.tool-icon,
-.tab-icon {
-  width: 60rpx;
-  height: 60rpx;
-  margin-bottom: 10rpx;
-}
-
-.tool-text,
-.tab-text {
-  font-size: 24rpx;
-  color: #333;
-}
+/* 最外层容器 */
+.page-container {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+  }
+  
+  /* 背景图解决方案（关键代码） */
+  .background-image {
+    position: fixed;  /* 固定定位 */
+    width: 100vw;     /* 视窗宽度 */
+    height: 100vh;    /* 视窗高度 */
+    top: 0;
+    left: 0;
+    z-index: -1;      /* 置于最底层 */
+    object-fit: cover; /* 保持比例填满 */
+  }
+  
+  /* 内容区域 */
+  .content {
+    position: relative;
+    z-index: 1;       /* 确保内容在上层 */
+    padding: 40rpx;
+    min-height: 100vh;
+    background-color: rgba(255, 255, 255, 0.85); /* 半透明遮罩 */
+  }
+  
+  /* 头部样式 */
+  .header {
+    display: flex;
+    justify-content: flex-end;
+    padding: 20rpx 0;
+  }
+  
+  .user-icons {
+    position: relative;
+  }
+  
+  .avatar {
+    width: 80rpx;
+    height: 80rpx;
+    border-radius: 50%;
+    box-shadow: 0 4rpx 8rpx rgba(0, 0, 0, 0.1);
+  }
+  
+  .red-dot {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 16rpx;
+    height: 16rpx;
+    background: #ff4d4f;
+    border-radius: 50%;
+    border: 2rpx solid #fff;
+  }
+  
+  /* 工具区域 */
+  .tools {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    margin-top: 40rpx;
+  }
+  
+  .tool-item {
+    width: 23%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20rpx 0;
+    margin-bottom: 30rpx;
+    background: rgba(255, 255, 255, 0.7);
+    border-radius: 16rpx;
+    box-shadow: 0 4rpx 12rpx rgba(0, 0, 0, 0.05);
+  }
+  
+  .tool-icon {
+    width: 80rpx;
+    height: 80rpx;
+    margin-bottom: 10rpx;
+  }
+  
+  .tool-text {
+    font-size: 24rpx;
+    color: #333;
+    font-weight: 500;
+  }

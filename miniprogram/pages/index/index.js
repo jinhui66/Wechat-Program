@@ -1,11 +1,11 @@
 Page({
   data: {
     tools: [
-      { name: "自定义打卡", icon: "/images/index/lion.png" },
-      { name: "记账", icon: "/images/index/lion.png" },
-      { name: "每日心情", icon: "/images/index/mood.png" },
-      { name: "番茄钟", icon: "/images/index/alarm2.jpg" },
-      { name: "课程表", icon: "/images/index/course.jpg" },
+      { name: "自定义打卡", icon: "/images/index/daka.png" },
+      { name: "记账", icon: "/images/index/jizhang.png" },
+      { name: "每日心情", icon: "/images/index/xq.png" },
+      { name: "番茄钟", icon: "/images/index/alarm2.png" },
+      { name: "课程表", icon: "/images/index/class.png" },
       { name: "勋章挑战", icon: "/images/index/lion.png" },
       { name: "YoYo商店", icon: "/images/index/lion.png" },
       { name: "睡眠舱", icon: "/images/index/lion.png" },
