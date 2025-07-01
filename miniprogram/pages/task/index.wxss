@@ -1,0 +1,172 @@
+/* 容器全屏设置 */
+.container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  flex-direction: column;
+  background-color: #e0f0ff;
+  padding: 20rpx;
+  box-sizing: border-box;
+}
+
+/* 日历区域 */
+.calendar {
+  flex-shrink: 0;
+  background: white;
+  border-radius: 16rpx;
+  margin-bottom: 20rpx;
+  padding: 20rpx;
+  box-shadow: 0 2rpx 8rpx rgba(0, 0, 0, 0.1);
+  
+  /* 新增宽度控制 */
+  width: 90%; /* 撑满父容器 */
+  margin-left: 0; /* 移除默认边距 */
+  margin-right: 0;
+  padding-left: 10rpx; /* 减少左右内边距 */
+  padding-right: 10rpx;
+}
+.calendar-header {
+  text-align: center;
+  font-size: 32rpx;
+  font-weight: bold;
+  margin: 10rpx 0;
+}
+.calendar-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 12rpx;
+}
+.calendar-cell {
+  height: 45rpx;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  font-size: 28rpx;
+}
+.calendar-cell.today {
+  border: 2rpx solid #468fe9;
+}
+.calendar-cell.selected {
+  background-color: #468fe9;
+  color: white;
+}
+.calendar-cell.header {
+  font-weight: bold;
+  background: none;
+  color: #555;
+}
+.nav-btn {
+  color: #468fe9;
+  padding: 0 20rpx;
+}
+.today-btn {
+  background-color: #468fe9;
+  color: white;
+  font-size: 26rpx;
+  padding: 8rpx 16rpx;
+  border-radius: 20rpx;
+}
+
+/* 四象限滚动容器 */
+.quadrants-container {
+  flex: 1;
+  overflow: hidden;
+  margin-bottom: 20rpx;
+}
+.quadrants {
+  display: flex;
+  flex-direction: column;
+  gap: 20rpx;
+  height: 100%;
+}
+.quadrant-row {
+  display: flex;
+  gap: 20rpx;
+  flex: 1;
+}
+.quadrant {
+  flex: 1;
+  min-height: 300rpx;
+  max-height: 400rpx;
+  overflow-y: auto;
+  background: white;
+  border: 2rpx solid #468fe9;
+  border-radius: 16rpx;
+  padding: 20rpx;
+  box-shadow: 0 2rpx 8rpx rgba(0, 0, 0, 0.1);
+}
+.quad-title {
+  font-weight: bold;
+  color: #468fe9;
+  font-size: 30rpx;
+  margin-bottom: 15rpx;
+}
+.task-item {
+  padding: 15rpx;
+  margin-bottom: 10rpx;
+  background: #f0f8ff;
+  border-radius: 8rpx;
+  font-size: 28rpx;
+}
+.task-item.done {
+  text-decoration: line-through;
+  color: #999;
+}
+
+/* 底部按钮 */
+.add-btn {
+  flex-shrink: 0;
+  background-color: #3b82f6;
+  color: white;
+  text-align: center;
+  padding: 20rpx;
+  border-radius: 40rpx;
+  font-size: 32rpx;
+  box-shadow: 0 4rpx 12rpx rgba(59, 130, 246, 0.3);
+}
+
+/* 弹窗样式 */
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 100;
+}
+.modal-content {
+  width: 80%;
+  background: white;
+  border-radius: 20rpx;
+  padding: 30rpx;
+}
+.picker-btn {
+  background: #f0f8ff;
+  padding: 20rpx;
+  border-radius: 12rpx;
+  margin-bottom: 20rpx;
+}
+.modal-actions {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 30rpx;
+}
+.modal-actions button {
+  flex: 1;
+}
+
+/* 滚动条美化（iOS有效） */
+::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+  color: transparent;
+}

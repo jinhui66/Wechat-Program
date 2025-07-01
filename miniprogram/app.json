@@ -6,7 +6,8 @@
     "pages/schedule/index",
     "pages/mood/index",
     "pages/course/index",
-    "pages/alarm/index"
+    "pages/alarm/index",
+    "pages/task/index"
   ],
   "window": {
     "backgroundColor": "#F6F6F6",

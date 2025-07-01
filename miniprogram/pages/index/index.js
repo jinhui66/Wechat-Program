@@ -2,7 +2,7 @@ Page({
   data: {
     tools: [
       { name: "课程表", icon: "/images/index/course.jpg" },
-      { name: "打卡组", icon: "/images/index/lion.png" },
+      { name: "自定义打卡", icon: "/images/index/lion.png" },
       { name: "勋章挑战", icon: "/images/index/lion.png" },
       { name: "记账", icon: "/images/index/lion.png" },
       { name: "YoYo商店", icon: "/images/index/lion.png" },
@@ -20,7 +20,7 @@ Page({
     const name = e.currentTarget.dataset.name;
     let pageMap = {
       "课程表": "/pages/course/index",
-      "打卡组": "/pages/punch/index",
+      "自定义打卡": "/pages/task/index",
       "勋章挑战": "/pages/badge/index",
       "记账": "/pages/bill/index",
       "YoYo商店": "/pages/store/index",

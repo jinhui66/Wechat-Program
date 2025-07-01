@@ -1,0 +1,99 @@
+<!-- 四象限任务打卡主页面 -->
+<view class="container">
+  <!-- 日历区域 -->
+  <view class="calendar">
+    <view class="calendar-tools">
+      <button class="today-btn" bindtap="goToday">回到今天</button>
+    </view>
+    <view class="calendar-header">
+      <text class="nav-btn" bindtap="prevMonth">《</text>
+      {{currentYear}}年{{currentMonth + 1}}月
+      <text class="nav-btn" bindtap="nextMonth">》</text>
+    </view>
+    <view class="calendar-grid">
+      <block wx:for="{{weekdays}}" wx:key="*this">
+        <view class="calendar-cell header">{{item}}</view>
+      </block>
+      <block wx:for="{{calendarDays}}" wx:key="date">
+        <view class="calendar-cell {{item.isToday ? 'today' : ''}} {{item.isSelected ? 'selected' : ''}}" 
+              bindtap="onCalendarTap" data-date="{{item.date}}">
+          {{item.day}}
+        </view>
+      </block>
+    </view>
+  </view>
+
+  <!-- 四象限区域（外层滚动容器） -->
+  <scroll-view class="quadrants-container" scroll-y>
+    <view class="quadrants">
+      <view class="quadrant-row">
+        <view class="quadrant quadrant-1">
+          <text class="quad-title">紧急且重要</text>
+          <block wx:for="{{filteredTasks[1]}}" wx:key="id">
+            <view class="task-item {{item.completed ? 'done' : ''}}" 
+                  bindtap="toggleTask" bindlongpress="deleteTask" 
+                  data-id="{{item.id}}">
+              {{item.name}}
+            </view>
+          </block>
+        </view>
+        <view class="quadrant quadrant-2">
+          <text class="quad-title">不紧急但重要</text>
+          <block wx:for="{{filteredTasks[2]}}" wx:key="id">
+            <view class="task-item {{item.completed ? 'done' : ''}}" 
+                  bindtap="toggleTask" data-id="{{item.id}}">
+              {{item.name}}
+            </view>
+          </block>
+        </view>
+      </view>
+
+      <view class="quadrant-row">
+        <view class="quadrant quadrant-3">
+          <text class="quad-title">紧急但不重要</text>
+          <block wx:for="{{filteredTasks[3]}}" wx:key="id">
+            <view class="task-item {{item.completed ? 'done' : ''}}" 
+                  bindtap="toggleTask" data-id="{{item.id}}">
+              {{item.name}}
+            </view>
+          </block>
+        </view>
+        <view class="quadrant quadrant-4">
+          <text class="quad-title">不紧急不重要</text>
+          <block wx:for="{{filteredTasks[4]}}" wx:key="id">
+            <view class="task-item {{item.completed ? 'done' : ''}}" 
+                  bindtap="toggleTask" data-id="{{item.id}}">
+              {{item.name}}
+            </view>
+          </block>
+        </view>
+      </view>
+    </view>
+  </scroll-view>
+
+  <!-- 底部添加按钮 -->
+  <view class="add-btn" bindtap="openAddTaskModal">+ 添加任务</view>
+
+  <!-- 添加任务弹窗 -->
+  <view class="modal" wx:if="{{showAddModal}}">
+    <view class="modal-content">
+      <input placeholder="任务名称" bindinput="onInputTaskName" value="{{newTask.name}}" />
+      <picker mode="selector" range="{{quadrantOptions}}" bindchange="onQuadrantChange">
+        <view class="picker-btn">{{quadrantOptions[newTask.quadrant - 1] || '选择象限'}}</view>
+      </picker>
+      <picker mode="selector" range="{{repeatOptions}}" bindchange="onRepeatChange">
+        <view class="picker-btn">{{repeatOptions[newTask.repeatType] || '选择重复方式'}}</view>
+      </picker>
+      <picker mode="date" bindchange="onPickDate" wx:if="{{newTask.repeatType == 0}}">
+        <view class="picker-btn">{{newTask.date || '选择日期'}}</view>
+      </picker>
+      <picker mode="selector" range="{{weekdays}}" bindchange="onPickWeekday" wx:if="{{newTask.repeatType == 2}}">
+        <view class="picker-btn">{{weekdays[newTask.weekday] || '选择星期'}}</view>
+      </picker>
+      <view class="modal-actions">
+        <button bindtap="addTask">确认</button>
+        <button bindtap="cancelAddTask">取消</button>
+      </view>
+    </view>
+  </view>
+</view>
