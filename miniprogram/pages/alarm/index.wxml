@@ -1,31 +1,52 @@
-<view class="compact-container">
-  <!-- 时间显示 -->
-  <view class="compact-time">{{currentTime}}</view>
-  <view class="compact-status">{{statusText}}</view>
-
-  <!-- 时间设置 -->
-  <view class="compact-settings">
-    <view class="compact-setting">
-      <text>专注时长（分钟）</text>
-      <view class="compact-adjust">
-        <button class="compact-btn" bindtap="decreaseWorkTime">-</button>
-        <text class="compact-value">{{workTime}}</text>
-        <button class="compact-btn" bindtap="increaseWorkTime">+</button>
+<!-- pages/alarm/index.wxml -->
+<view class="page-container">
+  <!-- 背景图（必须放在首位） -->
+  <image 
+    src="/images/index/clock-bg.jpg" 
+    class="background-image" 
+    mode="aspectFill"
+    wx:if="{{!bgError}}"
+    binderror="onBgError"
+  />
+  
+  <!-- 内容遮罩层 -->
+  <view class="content-mask">
+    <!-- 主容器 -->
+    <view class="clock-container">
+      <!-- 标题 -->
+      <view class="clock-title">闹钟提醒</view>
+      
+      <!-- 圆盘时钟 -->
+      <view class="clock-face">
+        <view class="time-display">{{currentTime}}</view>
+        <view class="clock-status">{{statusText}}</view>
       </view>
-    </view>
 
-    <view class="compact-setting">
-      <text>休息时长（分钟）</text>
-      <view class="compact-adjust">
-        <button class="compact-btn" bindtap="decreaseRestTime">-</button>
-        <text class="compact-value">{{restTime}}</text>
-        <button class="compact-btn" bindtap="increaseRestTime">+</button>
+      <!-- 时间设置组 -->
+      <view class="settings-group">
+        <!-- 专注时间设置 -->
+        <view class="time-setting">
+          <text class="setting-label">专注时长（分钟）</text>
+          <view class="adjust-group">
+            <button class="adjust-btn minus" bindtap="decreaseWorkTime">-</button>
+            <text class="time-value">{{workTime}}</text>
+            <button class="adjust-btn plus" bindtap="increaseWorkTime">+</button>
+          </view>
+        </view>
+
+        <!-- 休息时间设置 -->
+        <view class="time-setting">
+          <text class="setting-label">休息时长（分钟）</text>
+          <view class="adjust-group">
+            <button class="adjust-btn minus" bindtap="decreaseRestTime">-</button>
+            <text class="time-value">{{restTime}}</text>
+            <button class="adjust-btn plus" bindtap="increaseRestTime">+</button>
+          </view>
+        </view>
       </view>
+
+      <!-- 控制按钮 -->
+      <button class="control-btn" bindtap="toggleTimer">{{btnText}}</button>
     </view>
   </view>
-
-  <!-- 控制按钮 -->
-  <button class="compact-control-btn" bindtap="toggleTimer">
-    {{btnText}}
-  </button>
 </view>

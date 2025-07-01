@@ -1,66 +1,151 @@
-/* 紧凑容器 */
-.compact-container {
-    padding: 20rpx;
+/* pages/alarm/index.wxss */
+
+/* 基础容器 */
+.page-container {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    overflow: hidden;
+  }
+  
+  /* 背景图设置 */
+  .background-image {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    z-index: 0;
+    opacity: 0.9;
+  }
+  
+  /* 内容遮罩层 */
+  .content-mask {
+    position: relative;
+    z-index: 1;
+    background-color: rgba(255, 255, 255, 0.65);
+    backdrop-filter: blur(10rpx);
+    -webkit-backdrop-filter: blur(10rpx);
+    border-radius: 30rpx;
+    margin: 40rpx;
+    padding: 40rpx;
+    box-shadow: 0 10rpx 30rpx rgba(0, 0, 0, 0.1);
+  }
+  
+  /* 标题样式 */
+  .clock-title {
+    font-size: 42rpx;
+    font-weight: bold;
+    font-family: "PingFang SC", "Microsoft YaHei", sans-serif;
+    color: #333;
+    margin: 20rpx 0 40rpx;
+    text-align: center;
+    letter-spacing: 2rpx;
+    text-shadow: 0 2rpx 4rpx rgba(255, 255, 255, 0.8);
+  }
+  
+  /* 圆盘时钟 */
+  .clock-face {
+    width: 300rpx;
+    height: 300rpx;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.85);
+    box-shadow: 0 10rpx 30rpx rgba(0, 0, 0, 0.15);
     display: flex;
     flex-direction: column;
+    justify-content: center;
     align-items: center;
+    margin: 0 auto 50rpx;
+    border: 8rpx solid rgba(233, 236, 239, 0.7);
   }
   
-  /* 时间显示 */
-  .compact-time {
-    font-size: 64rpx;  /* 比原来缩小20% */
-    margin: 30rpx 0 10rpx;
+  .time-display {
+    font-size: 56rpx;
     font-weight: bold;
+    color: #333;
+    margin-bottom: 10rpx;
   }
   
-  .compact-status {
-    font-size: 24rpx;
+  .clock-status {
+    font-size: 26rpx;
     color: #666;
+  }
+  
+  /* 时间设置组 */
+  .settings-group {
+    width: 100%;
+  }
+  
+  .time-setting {
     margin-bottom: 40rpx;
   }
   
-  /* 设置区域 */
-  .compact-settings {
-    width: 80%;
-    margin-bottom: 30rpx;
-  }
-  
-  .compact-setting {
-    margin-bottom: 25rpx;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-  
-  .compact-adjust {
-    display: flex;
-    align-items: center;
-  }
-  
-  .compact-btn {
-    width: 60rpx;
-    height: 60rpx;
-    font-size: 32rpx;
-    line-height: 60rpx;
-    margin: 0 15rpx;
-    border: 1rpx solid #ddd;
-    background: #f8f8f8;
-  }
-  
-  .compact-value {
-    min-width: 80rpx;
+  .setting-label {
+    display: block;
     text-align: center;
-    font-size: 32rpx;
+    margin-bottom: 20rpx;
+    color: #333;
+    font-size: 30rpx;
+    text-shadow: 0 2rpx 4rpx rgba(255, 255, 255, 0.5);
+  }
+  
+  .adjust-group {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .adjust-btn {
+    width: 80rpx;
+    height: 80rpx;
+    border-radius: 50%;
+    font-size: 36rpx;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 25rpx;
+    border: none;
+    color: white;
+    box-shadow: 0 4rpx 8rpx rgba(0, 0, 0, 0.1);
+  }
+  
+  .minus {
+    background: rgba(255, 90, 95, 0.9);
+  }
+  
+  .plus {
+    background: rgba(76, 217, 100, 0.9);
+  }
+  
+  .time-value {
+    font-size: 36rpx;
+    min-width: 100rpx;
+    text-align: center;
+    font-weight: bold;
   }
   
   /* 控制按钮 */
-  .compact-control-btn {
-    width: 70%;
-    height: 80rpx;
-    line-height: 80rpx;
-    font-size: 32rpx;
-    border-radius: 40rpx;
-    background: #07C160;
+  .control-btn {
+    width: 280rpx;
+    height: 90rpx;
+    border-radius: 45rpx;
+    background: rgba(54, 209, 220, 0.9);
     color: white;
-    margin-top: 30rpx;
+    font-size: 34rpx;
+    margin: 50rpx auto 0;
+    border: none;
+    box-shadow: 0 6rpx 12rpx rgba(54, 209, 220, 0.4);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  /* 深色背景适配（备用） */
+  .dark-mode .content-mask {
+    background-color: rgba(0, 0, 0, 0.5);
+  }
+  .dark-mode .clock-title,
+  .dark-mode .setting-label {
+    color: white;
+    text-shadow: 0 2rpx 4rpx rgba(0, 0, 0, 0.5);
   }
