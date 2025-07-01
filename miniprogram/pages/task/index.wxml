@@ -41,7 +41,7 @@
           <text class="quad-title">不紧急但重要</text>
           <block wx:for="{{filteredTasks[2]}}" wx:key="id">
             <view class="task-item {{item.completed ? 'done' : ''}}" 
-                  bindtap="toggleTask" data-id="{{item.id}}">
+                  bindtap="toggleTask" bindlongpress="deleteTask"  data-id="{{item.id}}">
               {{item.name}}
             </view>
           </block>
@@ -53,7 +53,7 @@
           <text class="quad-title">紧急但不重要</text>
           <block wx:for="{{filteredTasks[3]}}" wx:key="id">
             <view class="task-item {{item.completed ? 'done' : ''}}" 
-                  bindtap="toggleTask" data-id="{{item.id}}">
+                  bindtap="toggleTask" bindlongpress="deleteTask"  data-id="{{item.id}}">
               {{item.name}}
             </view>
           </block>
@@ -62,7 +62,7 @@
           <text class="quad-title">不紧急不重要</text>
           <block wx:for="{{filteredTasks[4]}}" wx:key="id">
             <view class="task-item {{item.completed ? 'done' : ''}}" 
-                  bindtap="toggleTask" data-id="{{item.id}}">
+                  bindtap="toggleTask" bindlongpress="deleteTask"  data-id="{{item.id}}">
               {{item.name}}
             </view>
           </block>
