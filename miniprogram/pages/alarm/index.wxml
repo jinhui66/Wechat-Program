@@ -1,6 +1,6 @@
 <!-- pages/alarm/index.wxml -->
 <view class="page-container">
-  <!-- 背景图（必须放在首位） -->
+  <!-- 背景图 -->
   <image 
     src="/images/index/clock-bg.jpg" 
     class="background-image" 
@@ -9,9 +9,8 @@
     binderror="onBgError"
   />
   
-  <!-- 内容遮罩层 -->
+  <!-- 内容区 -->
   <view class="content-mask">
-    <!-- 主容器 -->
     <view class="clock-container">
       <!-- 标题 -->
       <view class="clock-title">闹钟提醒</view>
@@ -28,9 +27,13 @@
         <view class="time-setting">
           <text class="setting-label">专注时长（分钟）</text>
           <view class="adjust-group">
-            <button class="adjust-btn minus" bindtap="decreaseWorkTime">-</button>
+            <button class="adjust-btn minus" bindtap="decreaseWorkTime">
+              <text class="btn-icon">-</text>
+            </button>
             <text class="time-value">{{workTime}}</text>
-            <button class="adjust-btn plus" bindtap="increaseWorkTime">+</button>
+            <button class="adjust-btn plus" bindtap="increaseWorkTime">
+              <text class="btn-icon">+</text>
+            </button>
           </view>
         </view>
 
@@ -38,15 +41,21 @@
         <view class="time-setting">
           <text class="setting-label">休息时长（分钟）</text>
           <view class="adjust-group">
-            <button class="adjust-btn minus" bindtap="decreaseRestTime">-</button>
+            <button class="adjust-btn minus" bindtap="decreaseRestTime">
+              <text class="btn-icon">-</text>
+            </button>
             <text class="time-value">{{restTime}}</text>
-            <button class="adjust-btn plus" bindtap="increaseRestTime">+</button>
+            <button class="adjust-btn plus" bindtap="increaseRestTime">
+              <text class="btn-icon">+</text>
+            </button>
           </view>
         </view>
       </view>
 
       <!-- 控制按钮 -->
-      <button class="control-btn" bindtap="toggleTimer">{{btnText}}</button>
+      <button class="control-btn" bindtap="toggleTimer">
+        {{btnText}}
+      </button>
     </view>
   </view>
 </view>

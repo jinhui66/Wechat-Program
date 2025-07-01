@@ -1,27 +1,43 @@
 /**app.wxss**/
-.container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  box-sizing: border-box;
-} 
 
-button {
-  background: initial;
-}
-
-button:focus{
-  outline: 0;
-}
-
-button::after{
-  border: none;
-}
-
-
-page {
-  background: #f6f6f6;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-}
+/* 全局按钮样式重置（必须放在最前面） */
+button, button::after {
+    min-width: 0 !important;
+    min-height: 0 !important;
+    padding: 0 !important;
+    margin: 0;
+    line-height: 1;
+    border-radius: 0;
+    border: none;
+    background: none;
+  }
+  
+  /* 保持您原有的全局样式 */
+  button {
+    background: initial;
+  }
+  
+  button:focus {
+    outline: 0;
+  }
+  
+  button::after {
+    border: none;
+  }
+  
+  /* 您的容器样式 */
+  .container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    box-sizing: border-box;
+  }
+  
+  /* 页面基础样式 */
+  page {
+    background: #f6f6f6;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+  }
+  

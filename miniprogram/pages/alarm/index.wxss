@@ -23,13 +23,12 @@
   .content-mask {
     position: relative;
     z-index: 1;
-    background-color: rgba(255, 255, 255, 0.65);
+    background-color: rgba(255, 255, 255, 0.7);
     backdrop-filter: blur(10rpx);
     -webkit-backdrop-filter: blur(10rpx);
     border-radius: 30rpx;
     margin: 40rpx;
     padding: 40rpx;
-    box-shadow: 0 10rpx 30rpx rgba(0, 0, 0, 0.1);
   }
   
   /* 标题样式 */
@@ -38,10 +37,10 @@
     font-weight: bold;
     font-family: "PingFang SC", "Microsoft YaHei", sans-serif;
     color: #333;
-    margin: 20rpx 0 40rpx;
+    margin: 30rpx 0;
     text-align: center;
     letter-spacing: 2rpx;
-    text-shadow: 0 2rpx 4rpx rgba(255, 255, 255, 0.8);
+    text-shadow: 0 2rpx 4rpx rgba(255,255,255,0.8);
   }
   
   /* 圆盘时钟 */
@@ -49,8 +48,8 @@
     width: 300rpx;
     height: 300rpx;
     border-radius: 50%;
-    background: rgba(255, 255, 255, 0.85);
-    box-shadow: 0 10rpx 30rpx rgba(0, 0, 0, 0.15);
+    background: rgba(255,255,255,0.85);
+    box-shadow: 0 10rpx 30rpx rgba(0,0,0,0.15);
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -86,7 +85,7 @@
     margin-bottom: 20rpx;
     color: #333;
     font-size: 30rpx;
-    text-shadow: 0 2rpx 4rpx rgba(255, 255, 255, 0.5);
+    text-shadow: 0 2rpx 4rpx rgba(255,255,255,0.5);
   }
   
   .adjust-group {
@@ -95,33 +94,62 @@
     align-items: center;
   }
   
+  /* 圆形按钮（无渐变版本） */
   .adjust-btn {
+    min-width: 0 !important;
+    min-height: 0 !important;
     width: 80rpx;
     height: 80rpx;
+    box-sizing: border-box;
     border-radius: 50%;
     font-size: 36rpx;
     display: flex;
     justify-content: center;
     align-items: center;
-    margin: 0 25rpx;
+    margin: 0 20rpx;
     border: none;
-    color: white;
-    box-shadow: 0 4rpx 8rpx rgba(0, 0, 0, 0.1);
+    background: white;
+    box-shadow: 0 4rpx 12rpx rgba(0,0,0,0.15);
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s;
+    -webkit-tap-highlight-color: transparent;
+    padding: 0 !important;
+    line-height: 1;
   }
   
-  .minus {
-    background: rgba(255, 90, 95, 0.9);
+  /* 按钮颜色（纯色） */
+  .minus { 
+    background: rgba(255, 90, 95, 0.12);
+    border: 1rpx solid rgba(255, 90, 95, 0.3);
+  }
+  .plus { 
+    background: rgba(76, 217, 100, 0.12);
+    border: 1rpx solid rgba(76, 217, 100, 0.3);
   }
   
-  .plus {
-    background: rgba(76, 217, 100, 0.9);
+  /* 按钮文字 */
+  .btn-icon {
+    font-weight: bold;
+    color: #5D4037;
+    position: relative;
+    z-index: 2;
+    text-shadow: none;
+    margin-top: -2rpx;
+  }
+  
+  /* 按钮按压效果 */
+  .adjust-btn:active {
+    transform: scale(0.95);
+    opacity: 0.9;
   }
   
   .time-value {
-    font-size: 36rpx;
+    font-size: 38rpx;
     min-width: 100rpx;
     text-align: center;
     font-weight: bold;
+    color: #333;
   }
   
   /* 控制按钮 */
@@ -138,14 +166,21 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    transition: all 0.3s;
   }
   
-  /* 深色背景适配（备用） */
+  .control-btn:active {
+    transform: scale(0.98);
+    opacity: 0.9;
+  }
+  
+  /* 深色模式适配 */
   .dark-mode .content-mask {
     background-color: rgba(0, 0, 0, 0.5);
   }
   .dark-mode .clock-title,
-  .dark-mode .setting-label {
+  .dark-mode .setting-label,
+  .dark-mode .time-value {
     color: white;
-    text-shadow: 0 2rpx 4rpx rgba(0, 0, 0, 0.5);
+    text-shadow: 0 2rpx 4rpx rgba(0,0,0,0.5);
   }
