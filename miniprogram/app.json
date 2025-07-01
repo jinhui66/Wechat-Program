@@ -1,13 +1,13 @@
 {
   "pages": [
     "pages/index/index",
-    "pages/plan/index",
     "pages/profile/index",
     "pages/schedule/index",
     "pages/mood/index",
     "pages/course/index",
     "pages/alarm/index",
-    "pages/task/index"
+    "pages/task/index",
+    "pages/AIchat/index"
   ],
   "window": {
     "backgroundColor": "#F6F6F6",
@@ -28,8 +28,8 @@
         "selectedIconPath": "images/index/lion.png"
       },
       {
-        "pagePath": "pages/plan/index",
-        "text": "计划",
+        "pagePath": "pages/AIchat/index",
+        "text": "AI聊天",
         "iconPath": "images/index/lion.png",
         "selectedIconPath": "images/index/lion.png"
       },

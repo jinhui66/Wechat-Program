@@ -1,4 +1,4 @@
-// pages/plan/index.js
+// pages/AIchat/index.js
 Page({
 
   /**
