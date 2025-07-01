@@ -1,4 +1,3 @@
-// pages/alarm/index.js
 Page({
     data: {
       currentTime: '25:00',
@@ -61,8 +60,26 @@ Page({
       if (this.data.isWorking || this.data.isResting) {
         this.pauseTimer();
       } else {
-        this.startWork();
+        // 继续时从 remainingSeconds 开始，而不是 workTime * 60
+        if (this.data.remainingSeconds <= 0) {
+          this.startWork(); // 如果时间为0，重新开始
+        } else {
+          this.resumeTimer(); // 否则从剩余时间继续
+        }
       }
+    },
+  
+    // 新增：从剩余时间继续
+    resumeTimer() {
+      this.clearTimer();
+      const seconds = this.data.remainingSeconds;
+      this.setData({
+        isWorking: !this.data.isResting, // 恢复之前的状态
+        isResting: this.data.isResting,
+        btnText: '暂停',
+        statusText: this.data.isResting ? '休息中' : '专注中'
+      });
+      this.startCountdown(seconds);
     },
   
     startWork() {
@@ -99,6 +116,7 @@ Page({
         btnText: '继续专注',
         statusText: '已暂停'
       });
+      // 注意：这里不修改 remainingSeconds，保留暂停时的值
     },
   
     startCountdown(seconds) {
