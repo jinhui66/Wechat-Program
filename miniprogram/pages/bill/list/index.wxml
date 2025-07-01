@@ -1,0 +1,18 @@
+<!-- pages/bill/list/index.wxml -->
+<view class="container">
+  <scroll-view class="bill-list" scroll-y="true">
+    <block wx:for="{{bills}}" wx:key="index">
+      <view class="bill-item" bindlongpress="onLongPress" data-index="{{index}}">
+        <view class="left">
+          <image class="icon" src="{{getIcon(item.category)}}" />
+          <view class="info">
+            <text class="date-cat">{{item.date}} · {{item.category}}</text>
+            <text class="amount">¥{{item.amount}}</text>
+            <text wx:if="{{item.note}}" class="note">备注：{{item.note}}</text>
+          </view>
+        </view>
+        <text class="right">›</text>
+      </view>
+    </block>
+  </scroll-view>
+</view>

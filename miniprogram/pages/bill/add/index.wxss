@@ -1,0 +1,44 @@
+.form {
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.form-item {
+  display: flex;
+  flex-direction: column;
+}
+
+.label {
+  font-size: 16px;
+  color: #666;
+  margin-bottom: 6px;
+}
+
+.input, .textarea, .picker {
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  font-size: 16px;
+  background-color: #fdfdfd;
+}
+
+.textarea {
+  min-height: 80px;
+  resize: none;
+}
+
+.save-btn {
+  background-color: #3c9cff;
+  color: white;
+  font-size: 18px;
+  padding: 12px 0;
+  border: none;
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.save-btn:active {
+  background-color: #2a8adf;
+}

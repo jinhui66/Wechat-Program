@@ -1,0 +1,5 @@
+<view class="container">
+  <text>今日消费：¥{{todayTotal}}</text>
+  <text>本月消费：¥{{monthTotal}}</text>
+  <button bindtap="goAdd">记一笔</button>
+</view>

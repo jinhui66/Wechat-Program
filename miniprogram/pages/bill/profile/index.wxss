@@ -1,0 +1,3 @@
+.container { padding: 24px; }
+text { display: block; margin: 8px 0; font-size: 18px; }
+button { margin-top: 16px; }

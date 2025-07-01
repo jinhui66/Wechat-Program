@@ -1,0 +1,5 @@
+<!-- pages/bill/stats/index.wxml -->
+<view class="container">
+  <canvas canvas-id="pieChart" class="chart"></canvas>
+  <canvas canvas-id="columnChart" class="chart"></canvas>
+</view>

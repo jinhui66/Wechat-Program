@@ -1,0 +1,28 @@
+<view class="form">
+  <view class="form-item">
+    <text class="label">金额</text>
+    <input class="input" placeholder="请输入金额" bindinput="bindAmount" type="number"/>
+  </view>
+
+  <view class="form-item">
+    <text class="label">分类</text>
+    <picker mode="selector" range="{{categories}}" bindchange="bindCategory">
+      <view class="picker">{{category}}</view>
+    </picker>
+  </view>
+
+  <view class="form-item">
+    <text class="label">备注</text>
+    <textarea class="textarea" placeholder="可填写备注" bindinput="bindNote"/>
+  </view>
+
+  <view class="form-item">
+    <text class="label">日期</text>
+    <picker mode="date" value="{{date}}" bindchange="bindDate">
+      <view class="picker">{{date}}</view>
+    </picker>
+  </view>
+
+  <button class="save-btn" bindtap="save">💾 保存账单</button>
+</view>
+

@@ -1,0 +1,14 @@
+<!-- pages/bill/overview/index.wxml -->
+<view class="grid-container">
+  <block wx:for="{{items}}" wx:key="name">
+    <navigator 
+      class="grid-item" 
+      hover-class="grid-item-active" 
+      data-url="{{item.url}}" 
+      bindtap="goToSub"
+    >
+      <image class="icon" src="{{item.icon}}" mode="aspectFit" />
+      <text class="label">{{item.name}}</text>
+    </navigator>
+  </block>
+</view>
