@@ -1,5 +1,21 @@
-<!-- pages/bill/stats/index.wxml -->
 <view class="container">
+  <view class="transaction-type-selector">
+    <text
+      class="type-btn {{transactionType === 'expense' ? 'active' : ''}}"
+      data-type="expense"
+      bindtap="changeTransactionType"
+    >
+      支出统计
+    </text>
+    <text
+      class="type-btn {{transactionType === 'income' ? 'active' : ''}}"
+      data-type="income"
+      bindtap="changeTransactionType"
+    >
+      收入统计
+    </text>
+  </view>
+
   <canvas canvas-id="pieChart" class="chart"></canvas>
   <canvas canvas-id="columnChart" class="chart"></canvas>
 </view>

@@ -1,10 +1,57 @@
-/* pages/bill/stats/index.wxss */
+/* stats.wxss */
 .container {
   padding: 16px;
   background-color: #f5f5f5;
+  min-height: 100vh; /* 确保背景色覆盖整个页面 */
 }
 .chart {
   width: 100%;
   height: 300px;
   margin-bottom: 24px;
+}
+
+.transaction-type-selector {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+  background-color: #fff;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.type-btn {
+  flex: 1;
+  text-align: center;
+  padding: 10px 15px;
+  font-size: 16px;
+  color: #666;
+  position: relative;
+  transition: all 0.2s ease-in-out;
+}
+
+.type-btn:first-child::after {
+  content: '';
+  position: absolute;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  height: 60%;
+  width: 1px;
+  background-color: #eee;
+}
+
+.type-btn.active {
+  color: #007bff; /* 你的主题色 */
+  font-weight: bold;
+}
+
+.type-btn.active::after {
+  background-color: transparent; /* 激活时去除分割线 */
+}
+
+/* 可以根据需要调整激活状态下的边框或背景 */
+.type-btn.active {
+  background-color: #e6f7ff; /* 浅蓝色背景 */
+  color: #007bff;
 }

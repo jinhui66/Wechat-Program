@@ -31,12 +31,17 @@
 }
 
 .save-btn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   background-color: #3c9cff;
   color: white;
-  font-size: 18px;
-  padding: 12px 0;
+  font-size: 24px;
+  padding: 20px 0;
   border: none;
   border-radius: 10px;
+  height: 45px;
+  width: 120px;
   box-shadow: 0 2px 8px rgba(0,0,0,0.1);
 }
 

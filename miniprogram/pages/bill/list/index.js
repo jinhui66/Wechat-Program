@@ -1,3 +1,8 @@
+// list.js
+// 获取数据库引用
+const db = wx.cloud.database();
+const _ = db.command; // 引入 command API
+
 Page({
   data: {
     // 日历相关数据
@@ -45,11 +50,11 @@ Page({
   },
 
   onShow() {
-    this.loadBills();
+    this.loadBills(); // 每次页面显示时加载最新账单
   },
 
   /**
-   * 日历相关方法
+   * 日历相关方法 (保持不变，或根据需要优化)
    */
   initCalendar() {
     const { year, month } = this.data;
@@ -304,11 +309,22 @@ Page({
   /**
    * 账单数据相关方法
    */
-  loadBills() {
-    const list = wx.getStorageSync('bills') || [];
-    this.setData({ allBills: list.reverse() }, () => {
-      this.filterBills(); // 加载所有账单后进行筛选
+  async loadBills() {
+    wx.showLoading({
+      title: '加载中...',
     });
+    try {
+      // 从云数据库获取所有账单，并按创建时间倒序排列
+      const res = await db.collection('bills').orderBy('createTime', 'desc').get();
+      this.setData({ allBills: res.data }, () => {
+        this.filterBills(); // 加载所有账单后进行筛选
+      });
+      wx.hideLoading();
+    } catch (err) {
+      wx.hideLoading();
+      console.error('加载账单失败：', err);
+      wx.showToast({ title: '加载失败，请重试', icon: 'none' });
+    }
   },
 
   filterBills() {
@@ -339,8 +355,6 @@ Page({
     }
 
     // 3. 计算总金额
-    // 如果筛选的是“全部”或“支出”，则总金额为支出金额
-    // 如果筛选的是“收入”，则总金额为收入金额
     if (transactionType === 'all') {
       let incomeSum = 0;
       let expenseSum = 0;
@@ -357,7 +371,6 @@ Page({
     } else if (transactionType === 'income') {
       total = filtered.reduce((sum, bill) => sum + bill.amount, 0);
     }
-
 
     this.setData({
       filteredBills: filtered,
@@ -394,39 +407,37 @@ Page({
   },
 
   onLongPress(e) {
-    const idx = e.currentTarget.dataset.index;
-    const item = this.data.filteredBills[idx]; // 注意：这里是对 filteredBills 操作
+    const item = e.currentTarget.dataset.item; // 直接获取整个 item
     wx.showActionSheet({
       itemList: ['删除'],
       success: res => {
         if (res.tapIndex === 0) {
-          this.deleteBill(item); // 传递完整的 item 进行删除
+          this.deleteBill(item);
         }
       }
     });
   },
 
-  deleteBill(itemToDelete) {
+  async deleteBill(itemToDelete) {
     wx.showModal({
       title: '确认删除',
       content: `删除 ${itemToDelete.category} ¥${itemToDelete.amount}?`,
-      success: res => {
+      success: async res => { // 使用 async 处理回调函数
         if (res.confirm) {
-          // 从 allBills 中删除
-          const newAllBills = this.data.allBills.filter(bill =>
-            !(bill.date === itemToDelete.date &&
-              bill.category === itemToDelete.category &&
-              bill.amount === itemToDelete.amount &&
-              bill.note === itemToDelete.note &&
-              bill.type === itemToDelete.type) // 确保类型也匹配
-          );
+          wx.showLoading({ title: '删除中...' });
+          try {
+            // 根据 _id 删除云数据库中的记录
+            await db.collection('bills').doc(itemToDelete._id).remove();
 
-          wx.setStorageSync('bills', newAllBills.reverse()); // 保存回 storage
-
-          this.setData({ allBills: newAllBills }, () => {
-            this.filterBills(); // 重新筛选和计算总金额
+            // 删除成功后，重新加载账单数据并筛选
+            this.loadBills();
+            wx.hideLoading();
             wx.showToast({ title: '已删除', icon: 'success' });
-          });
+          } catch (err) {
+            wx.hideLoading();
+            console.error('删除账单失败：', err);
+            wx.showToast({ title: '删除失败，请重试', icon: 'none' });
+          }
         }
       }
     });
@@ -435,7 +446,7 @@ Page({
   // 跳转到添加账单页面
   navigateToAddBill() {
     wx.navigateTo({
-      url: '/pages/bill/add/index' // 假设 add.js 在 pages/add/add 路径
+      url: '/pages/bill/add/index'
     });
   }
 });
