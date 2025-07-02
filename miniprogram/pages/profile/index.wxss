@@ -27,11 +27,16 @@
 }
 
 .username {
-  flex: 1;
-  font-size: 20px;
-  font-weight: 600;
-  color: #333;
+  font-size: 28rpx;
+  font-weight: bold;
 }
+
+.get-userinfo-btn {
+  margin-top: 20rpx;
+  background-color: #4CAF50;
+  color: white;
+}
+
 
 .bind-account {
   background-color: #ff6b6b;
