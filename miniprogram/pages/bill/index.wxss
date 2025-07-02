@@ -7,9 +7,10 @@
 }
 
 .grid-item {
-  width: 30%;
-  margin: 1.66%;
-  padding: 12px 0;
+  width: 90%;
+  
+  margin: 2%;
+  padding: 40px;
   background-color: #fff;
   border-radius: 8px;
   text-align: center;

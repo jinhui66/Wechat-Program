@@ -1,4 +1,15 @@
 <view class="form">
+  <view class="type-selector">
+    <text class="type-button {{accountType === 'expense' ? 'active' : ''}}"
+          data-type="expense" bindtap="bindAccountType">
+      支出
+    </text>
+    <text class="type-button {{accountType === 'income' ? 'active' : ''}}"
+          data-type="income" bindtap="bindAccountType">
+      收入
+    </text>
+  </view>
+
   <view class="form-item">
     <text class="label">金额</text>
     <input class="input" placeholder="请输入金额" bindinput="bindAmount" type="number"/>
@@ -25,4 +36,3 @@
 
   <button class="save-btn" bindtap="save">💾 保存账单</button>
 </view>
-

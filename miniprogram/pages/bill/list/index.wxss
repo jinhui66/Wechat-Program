@@ -1,58 +1,273 @@
+/* 容器样式 - 整个页面可滚动 */
 .container {
-  padding: 16px;
-  background-color: #f5f5f5;
+  height: 100vh; /* 撑满屏幕高度 */
+  background-color: #f7f7f7;
 }
 
-.bill-list {
+/* 日历样式 */
+.calendar-container {
+  width: 100%;
+  overflow: hidden;
+  position: relative;
+  background-color: #fff;
+  border-bottom: 1px solid #eee;
+  padding-bottom: 15px;
+}
+
+.slider {
   display: flex;
+  flex-direction: row;
+  width: 300%;
+}
+
+.month {
+  flex-shrink: 0;
+  padding: 15px;
+  box-sizing: border-box;
+}
+
+.month.current {
+  background: #fff;
+}
+
+.header {
+  font-size: 18px;
+  font-weight: bold;
+  margin-bottom: 15px;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+
+.picker-text {
+  padding: 5px 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  background-color: #f9f9f9;
+}
+
+.days {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.day-header, .day {
+  width: 14.28%;
+  aspect-ratio: 1; /* 保持正方形比例 */
+  display: flex;
+  align-items: center;
+  justify-content: center;
   flex-direction: column;
-  gap: 12px;
+  font-size: 14px;
+  box-sizing: border-box;
+}
+
+.day-header {
+  font-weight: bold;
+  color: #333;
+}
+
+.day {
+  position: relative;
+  border-radius: 50%;
+  color: #666;
+  padding: 5px;
+}
+
+.day.selected {
+  background: #1890ff;
+  color: #fff;
+  font-weight: bold;
+}
+
+.empty {
+  visibility: hidden;
+}
+
+/* 筛选和总计区域 */
+.filter-summary {
+  padding: 15px;
+  background-color: #fff;
+  border-bottom: 1px solid #eee;
+  margin-bottom: 10px;
+}
+
+/* 年月日筛选按钮样式 */
+.date-type-selector {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 15px;
+  border: 1px solid #1890ff;
+  border-radius: 5px;
+  overflow: hidden;
+}
+
+/* 收入/支出/全部筛选按钮样式 */
+.transaction-type-selector {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 15px; /* Adjust margin if needed */
+  border: 1px solid #4CAF50; /* Green for income/expense related buttons */
+  border-radius: 5px;
+  overflow: hidden;
+}
+
+.type-button {
+  flex: 1;
+  text-align: center;
+  padding: 8px 0;
+  font-size: 14px;
+  /* Default color for buttons, will be overridden by specific selectors */
+  color: #333;
+  background-color: #fff;
+}
+
+.date-type-selector .type-button {
+  color: #1890ff;
+}
+.date-type-selector .type-button + .type-button {
+  border-left: 1px solid #1890ff;
+}
+.date-type-selector .type-button.active {
+  background-color: #1890ff;
+  color: #fff;
+}
+
+.transaction-type-selector .type-button {
+  color: #1890ff; /* Default color for transaction type buttons */
+}
+.transaction-type-selector .type-button + .type-button {
+  border-left: 1px solid #1890ff;
+}
+.transaction-type-selector .type-button.active {
+  background-color: #1890ff;
+  color: #fff;
+}
+
+
+.summary-display {
+  text-align: center;
+  font-size: 16px;
+  color: #333;
+}
+
+.summary-text {
+  margin-right: 5px;
+}
+
+.total-amount {
+  font-size: 20px;
+  font-weight: bold;
+  /* color will be set dynamically based on type */
+}
+
+/* Specific colors for amounts */
+.expense-amount {
+  color: #e44d26; /* Red for expenses */
+}
+
+.income-amount {
+  color: #4CAF50; /* Green for income */
+}
+
+
+/* 账单列表样式 */
+.bill-list {
+  padding: 0 15px;
+  padding-bottom: 80px; /* 增加底部填充，避免添加按钮遮挡 */
 }
 
 .bill-item {
-  background: #fff;
-  border-radius: 8px;
-  padding: 12px 16px;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
   display: flex;
   justify-content: space-between;
-  align-items: flex-start;
+  align-items: center;
+  padding: 15px;
+  border-bottom: 1px solid #eee;
+  background-color: #fff;
+  margin-bottom: 10px;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+}
+
+.bill-item:last-child {
+  border-bottom: none;
 }
 
 .left {
   display: flex;
   align-items: center;
-  gap: 12px;
+  flex: 1;
 }
 
 .icon {
-  width: 32px;
-  height: 32px;
+  width: 40px;
+  height: 40px;
+  margin-right: 15px;
+  flex-shrink: 0;
+}
+
+.ic{
+  font-size: 30px;
+  font-weight: bold;
 }
 
 .info {
   display: flex;
   flex-direction: column;
+  flex: 1;
 }
 
 .date-cat {
   font-size: 14px;
-  color: #888;
+  color: #666;
+  margin-bottom: 0px;
 }
 
 .amount {
-  font-size: 18px;
-  color: #333;
-  margin-top: 4px;
+  font-size: 20px;
+  font-weight: bold;
+  /* Color defined by .expense-amount or .income-amount */
 }
 
 .note {
-  margin-top: 6px;
   font-size: 14px;
-  color: #666;
+  color: #333;
+  margin-top: 10px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 180px;
 }
 
 .right {
+  font-size: 20px;
+  color: #ccc;
+  margin-left: 10px;
+}
+
+.no-bills {
+  text-align: center;
+  padding: 50px 0;
+  color: #999;
   font-size: 16px;
-  color: #3c9cff;
+}
+
+/* 添加账单按钮 */
+.add-button {
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  background-color: #4a90e2;
+  color: white;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 30px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+  z-index: 99;
 }

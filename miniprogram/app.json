@@ -11,7 +11,6 @@
     "pages/bill/index",
     "pages/bill/add/index",
     "pages/bill/list/index",
-    "pages/bill/overview/index",
     "pages/bill/stats/index",
     "pages/bill/profile/index"
 

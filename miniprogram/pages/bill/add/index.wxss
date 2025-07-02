@@ -1,3 +1,4 @@
+/* add.wxss */
 .form {
   padding: 24px;
   display: flex;
@@ -41,4 +42,34 @@
 
 .save-btn:active {
   background-color: #2a8adf;
+}
+
+/* New styles for type selector */
+.type-selector {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 15px;
+  border: 1px solid #3c9cff;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.type-button {
+  flex: 1;
+  text-align: center;
+  padding: 10px 0;
+  font-size: 16px;
+  color: #3c9cff;
+  background-color: #fff;
+  transition: all 0.2s ease;
+}
+
+.type-button:first-child {
+  border-right: 1px solid #3c9cff;
+}
+
+.type-button.active {
+  background-color: #3c9cff;
+  color: white;
+  font-weight: bold;
 }
