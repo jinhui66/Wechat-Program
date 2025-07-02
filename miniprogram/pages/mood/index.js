@@ -22,7 +22,11 @@ Page({
     // 心情选择
     showMoodDialog: false,
     selectedDate: null,
-    dayMoods: {}
+    dayMoods: {},
+
+    // 心情总结
+    moodStats: [],  // 心情统计数据
+    monthSummary: ''// 月度总结文本
   },
 
   goToToday() {
@@ -49,6 +53,7 @@ Page({
 
   onLoad() {
     const { windowWidth } = wx.getSystemInfoSync();
+    this.loadMoods();
     this.setData({ 
       windowWidth,
       offsetX: -windowWidth 
@@ -260,5 +265,80 @@ Page({
 
   saveMoods() {
     wx.setStorageSync('dayMoods', this.data.dayMoods);
+  },
+
+  initCalendar() {
+    const { year, month } = this.data;
+    this.setData({
+      calendarDays: this.generateMonthDays(year, month),
+      prevMonth: this.getAdjacentMonth(-1),
+      nextMonth: this.getAdjacentMonth(1),
+      prevMonthDays: this.generateMonthDays(this.getAdjacentMonth(-1).year, this.getAdjacentMonth(-1).month, false),
+      nextMonthDays: this.generateMonthDays(this.getAdjacentMonth(1).year, this.getAdjacentMonth(1).month, false)
+    }, () => {
+      this.loadMoods();
+      this.calculateMoodStats(); // 新增统计计算
+    });
+  },
+  
+  // 新增方法：计算心情统计
+  calculateMoodStats() {
+    const { year, month, dayMoods, moods } = this.data;
+    const stats = {};
+    let total = 0;
+    
+    // 初始化统计对象
+    moods.forEach(mood => {
+      if (mood !== '无心情') {
+        stats[mood] = { count: 0, mood: mood };
+      }
+    });
+    
+    // 统计当月心情
+    for (let day = 1; day <= 31; day++) {
+      const dateKey = `${year}-${month}-${day}`;
+      if (dayMoods[dateKey]) {
+        const mood = dayMoods[dateKey];
+        if (stats[mood]) {
+          stats[mood].count++;
+          total++;
+        }
+      }
+    }
+    
+    // 计算百分比并添加颜色
+    const moodColors = {
+      '😊 开心': '#FFD700',
+      '😢 悲伤': '#6495ED',
+      '😴 困倦': '#9370DB',
+      '😡 生气': '#FF6347',
+      '😌 平静': '#3CB371'
+    };
+    
+    const moodStats = Object.values(stats).map(item => {
+      const percentage = total > 0 ? Math.round((item.count / total) * 100) : 0;
+      return {
+        ...item,
+        percentage: percentage,
+        color: moodColors[item.mood] || '#CCCCCC'
+      };
+    });
+    
+    // 生成总结文本
+    let summary = '';
+    if (total === 0) {
+      summary = '本月还没有记录心情哦～';
+    } else {
+      const topMood = moodStats.reduce((prev, current) => 
+        (prev.count > current.count) ? prev : current
+      );
+      summary = `本月你最常感到${topMood.mood.split(' ')[1]}，共记录了${topMood.count}天。`;
+    }
+    
+    this.setData({
+      moodStats: moodStats,
+      monthSummary: summary
+    });
   }
+  
 });

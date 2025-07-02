@@ -62,4 +62,35 @@
       {{item}}
     </view>
   </view>
+
+
+</view>
+<!-- 在calendar-container的关闭标签前添加 -->
+<view class="stats-container">
+  <view class="stats-header">本月心情统计</view>
+  
+  <!-- 心情统计图表 -->
+  <view class="mood-chart">
+  <view wx:for="{{moodStats}}" wx:key="mood" class="chart-bar-container">
+    <view class="chart-bar" style="height: {{item.percentage * 2}}rpx; background-color: {{item.color}};"></view>
+    <view class="chart-label">{{item.mood.split(' ')[1]}}</view>
+    <view class="chart-count">{{item.count}}次</view>
+  </view>
+</view>
+  
+  <!-- 心情统计详情 -->
+  <view class="stats-detail">
+    <view class="detail-item" wx:for="{{moodStats}}" wx:key="mood">
+      <view class="detail-color" style="background-color: {{item.color}};"></view>
+      <view class="detail-mood">{{item.mood}}</view>
+      <view class="detail-percent">{{item.percentage}}%</view>
+      <view class="detail-count">{{item.count}}次</view>
+    </view>
+  </view>
+  
+  <!-- 心情总结 -->
+  <view class="summary">
+    <view class="summary-title">本月心情总结</view>
+    <view class="summary-content">{{monthSummary}}</view>
+  </view>
 </view>
