@@ -1,2 +1,33 @@
-<!--pages/AIchat/index.wxml-->
-<text>pages/AIchat/index.wxml</text>
+<view class="chat-container">
+  <!-- 右上角切换会话按钮 -->
+
+  <!-- 会话列表弹窗 -->
+  <view wx:if="{{showChatList}}" class="chat-list-popup" bindtap="closeChatList">
+    <view class="chat-list" catchtap>
+      <block wx:for="{{chatIds}}" wx:key="id">
+        <view class="chat-list-item {{currentChatId === item ? 'active' : ''}}" data-id="{{item}}" bindtap="switchChat">
+          <text>{{item}}</text>
+        </view>
+      </block>
+    </view>
+  </view>
+
+  <!-- 无聊天时的居中提示 -->
+  <view wx:if="{{chatList.length === 0}}" class="empty-chat">
+    <text>开始新的聊天吧～</text>
+  </view>
+
+  <!-- 聊天记录 -->
+  <block wx:for="{{chatList}}" wx:key="index">
+    <view class="chat-item {{item.role}}">
+      <view class="chat-bubble">
+        <text>{{item.displayText}}</text>
+      </view>
+    </view>
+  </block>
+
+  <!-- 输入框 -->
+  <view class="input-area">
+    <input class="text-input" placeholder="请输入内容" confirm-type="send" bindconfirm="onSend" bindinput="onInput" value="{{inputValue}}" />
+  </view>
+</view>

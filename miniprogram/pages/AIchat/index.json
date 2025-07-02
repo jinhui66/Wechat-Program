@@ -1,4 +1,4 @@
 {
-    "usingComponents": {},
-    "navigationBarTitleText": "AI聊天"
-  }
+  "navigationBarTitleText": "DeepSeek Chat",
+  "usingComponents": {}
+}
