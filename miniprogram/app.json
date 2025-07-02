@@ -7,7 +7,13 @@
     "pages/course/index",
     "pages/alarm/index",
     "pages/task/index",
-    "pages/AIchat/index"
+    "pages/AIchat/index",
+    "pages/bill/index",
+    "pages/bill/add/index",
+    "pages/bill/list/index",
+    "pages/bill/stats/index",
+    "pages/bill/profile/index"
+
   ],
   "window": {
     "backgroundColor": "#F6F6F6",

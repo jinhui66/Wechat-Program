@@ -1,22 +1,54 @@
-<view class="header">
-  <view class="user-icons">
-    <image src="/images/index/lion.png" class="avatar" />
-    <view class="red-dot"></view>
+<view class="page-container">
+  <image src="/images/index/bk.jpg" mode="aspectFill" class="background-image"></image>
+  
+  <view class="content">
+    <!-- 头部区域 -->
+    <view class="header">
+      <view class="user-icons">
+        <image src="/images/index/lion.png" class="avatar" />
+        <view class="red-dot"></view>
+      </view>
+    </view>
+
+    <!-- 新增图片轮播 -->
+    <view class="banner-container">
+      <swiper 
+        autoplay 
+        interval="3000" 
+        circular
+        indicator-dots
+        indicator-color="rgba(255,255,255,0.5)"
+        indicator-active-color="#fff"
+      >
+        <block wx:for="{{banners}}" wx:key="image">
+          <swiper-item>
+            <image 
+              src="{{item.image}}" 
+              mode="aspectFill" 
+              class="banner-image"
+              bindtap="onBannerTap"
+              data-link="{{item.link}}"
+            />
+            <view class="banner-caption">
+              <text class="caption-text">{{item.title}}</text>
+            </view>
+          </swiper-item>
+        </block>
+      </swiper>
+    </view>
+
+    <!-- 工具区域 -->
+    <view class="tools">
+      <view 
+        wx:for="{{tools}}" 
+        wx:key="name" 
+        class="tool-item" 
+        bindtap="onToolTap" 
+        data-name="{{item.name}}"
+      >
+        <image src="{{item.icon}}" class="tool-icon" />
+        <text class="tool-text">{{item.name}}</text>
+      </view>
+    </view>
   </view>
 </view>
-
-
-<view class="tools">
-  <view 
-    class="tool-item" 
-    wx:for="{{tools}}" 
-    wx:key="name" 
-    bindtap="onToolTap" 
-    data-name="{{item.name}}"
-  >
-    <image src="{{item.icon}}" class="tool-icon" />
-    <text class="tool-text">{{item.name}}</text>
-  </view>
-</view>
-
-

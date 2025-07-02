@@ -1,0 +1,121 @@
+<scroll-view class="container" scroll-y="true">
+  <view class="calendar-container">
+    <view class="slider"
+          bindtouchstart="handleTouchStart"
+          bindtouchmove="handleTouchMove"
+          bindtouchend="handleTouchEnd"
+          style="transform: translateX({{offsetX}}px); transition: {{transition}};">
+
+      <view class="month" style="width: {{windowWidth}}px;">
+        <view class="header">{{prevMonth.year}}年{{prevMonth.month}}月</view>
+        <view class="days">
+          <view wx:for="{{daysOfWeek}}" wx:key="index" class="day-header">{{item}}</view>
+          <view wx:for="{{prevMonthDays}}" wx:key="index"
+                class="day {{!item.number ? 'empty' : ''}}">
+            {{item.number}}
+          </view>
+        </view>
+      </view>
+
+      <view class="month current" style="width: {{windowWidth}}px;">
+        <view class="header">
+          <picker mode="selector" range="{{years}}" bindchange="bindYearChange" value="{{selectedYearIndex}}">
+            <text class="picker-text">{{year}}年</text>
+          </picker>
+          <picker mode="selector" range="{{months}}" bindchange="bindMonthChange" value="{{selectedMonthIndex}}">
+            <text class="picker-text">{{month}}月</text>
+          </picker>
+        </view>
+        <view class="days">
+          <view wx:for="{{daysOfWeek}}" wx:key="index" class="day-header">{{item}}</view>
+          <view wx:for="{{calendarDays}}" wx:key="index"
+                class="day {{item.isSelected ? 'selected' : ''}} {{!item.number ? 'empty' : ''}}"
+                bindtap="handleDayTap" data-date="{{item.date}}">
+            {{item.number}}
+          </view>
+        </view>
+      </view>
+
+      <view class="month" style="width: {{windowWidth}}px;">
+        <view class="header">{{nextMonth.year}}年{{nextMonth.month}}月</view>
+        <view class="days">
+          <view wx:for="{{daysOfWeek}}" wx:key="index" class="day-header">{{item}}</view>
+          <view wx:for="{{nextMonthDays}}" wx:key="index"
+                class="day {{!item.number ? 'empty' : ''}}">
+            {{item.number}}
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <view class="filter-summary">
+    <view class="date-type-selector">
+      <text class="type-button {{dateType === 'year' ? 'active' : ''}}" data-type="year" bindtap="changeDateType">年</text>
+      <text class="type-button {{dateType === 'month' ? 'active' : ''}}" data-type="month" bindtap="changeDateType">月</text>
+      <text class="type-button {{dateType === 'day' ? 'active' : ''}}" data-type="day" bindtap="changeDateType">日</text>
+    </view>
+
+    <view class="transaction-type-selector">
+      <text class="type-button {{transactionType === 'all' ? 'active' : ''}}" data-type="all" bindtap="changeTransactionType">收支</text>
+      <text class="type-button {{transactionType === 'expense' ? 'active' : ''}}" data-type="expense" bindtap="changeTransactionType">支出</text>
+      <text class="type-button {{transactionType === 'income' ? 'active' : ''}}" data-type="income" bindtap="changeTransactionType">收入</text>
+    </view>
+
+    <view class="summary-display">
+      <block wx:if="{{dateType === 'year'}}">
+        <text class="summary-text">{{year}}年</text>
+      </block>
+      <block wx:elif="{{dateType === 'month'}}">
+        <text class="summary-text">{{year}}年{{month}}月</text>
+      </block>
+      <block wx:else>
+        <text class="summary-text">{{selectedDate}}</text>
+      </block>
+
+      <block wx:if="{{transactionType === 'all'}}">
+        <text class="summary-text">收支总计：</text>
+        <text class="total-amount {{totalAmount >= 0 ? 'income-amount' : 'expense-amount'}}">{{totalAmount > 0 ? '+' : ''}}{{totalAmount}}¥</text>
+      </block>
+      <block wx:elif="{{transactionType === 'expense'}}">
+        <text class="summary-text">支出总计：</text>
+        <text class="total-amount expense-amount">{{totalAmount}}¥</text>
+      </block>
+      <block wx:else>
+        <text class="summary-text">收入总计：</text>
+        <text class="total-amount income-amount">{{totalAmount}}¥</text>
+      </block>
+    </view>
+  </view>
+
+  <view class="bill-list">
+    <block wx:if="{{filteredBills.length > 0}}">
+      <block wx:for="{{filteredBills}}" wx:key="index">
+        <view class="bill-item" bindlongpress="onLongPress" data-index="{{index}}">
+          <view class="left">
+            <box class="icon">
+              <text class="ic {{item.type === 'income' ? 'income-amount' : 'expense-amount'}}">{{item.type === 'income' ? '收' : '支'}}</text>
+            </box>
+            <view class="info">
+              <text class="date-cat">{{item.date}} · {{item.category}}</text>
+              <text class="amount {{item.type === 'income' ? 'income-amount' : 'expense-amount'}}">
+                {{item.amount}}¥
+              </text>
+              <text wx:if="{{item.note}}" class="note">备注：{{item.note}}</text>
+            </view>
+          </view>
+          <text class="right">›</text>
+        </view>
+      </block>
+    </block>
+    <block wx:else>
+      <view class="no-bills">
+        <text>暂无账单数据</text>
+      </view>
+    </block>
+  </view>
+
+  <view class="add-button" bindtap="navigateToAddBill">
+    +
+  </view>
+</scroll-view>

@@ -1,11 +1,18 @@
 Page({
   data: {
+    // 新增标语数据
+    banners: [
+        { image: "/images/index/biaoyu1.jpg", link: "/pages/mood/index" },
+        { image: "/images/index/biaoyu2.jpg", link: "/pages/alarm/index" },
+        { image: "/images/index/biaoyu3.jpg", link: "/pages/alarm/index" },
+        { image: "/images/index/biaoyu4.jpg", link: "/pages/alarm/index" }
+      ],
     tools: [
-      { name: "自定义打卡", icon: "/images/index/lion.png" },
-      { name: "记账", icon: "/images/index/lion.png" },
-      { name: "每日心情", icon: "/images/index/mood.png" },
-      { name: "番茄钟", icon: "/images/index/alarm2.jpg" },
-      { name: "课程表", icon: "/images/index/course.jpg" },
+      { name: "自定义打卡", icon: "/images/index/daka.png" },
+      { name: "记账", icon: "/images/index/jizhang.png" },
+      { name: "每日心情", icon: "/images/index/xq.png" },
+      { name: "番茄钟", icon: "/images/index/alarm2.png" },
+      { name: "课程表", icon: "/images/index/class.png" },
       { name: "勋章挑战", icon: "/images/index/lion.png" },
       { name: "YoYo商店", icon: "/images/index/lion.png" },
       { name: "睡眠舱", icon: "/images/index/lion.png" },
@@ -14,6 +21,11 @@ Page({
       { name: "小憩区", icon: "/images/index/lion.png" },
       { name: "电波室", icon: "/images/index/lion.png" },
     ]
+  },
+  // 点击标语跳转
+  onBannerTap(e) {
+    const link = e.currentTarget.dataset.link;
+    wx.navigateTo({ url: link });
   },
 
   onToolTap(e) {
