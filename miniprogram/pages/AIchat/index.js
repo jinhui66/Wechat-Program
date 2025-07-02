@@ -10,8 +10,10 @@ Page({
   },
   onShow() {
     const tasks = wx.getStorageSync('tasks') || [];
+    const daymoods = wx.getStorageSync('dayMoods') || {};
+    const moodPrompt = this.listRawMoods(daymoods);
     const taskPrompt = this.listRawTasks(tasks);
-    this.setData({systemPrompt: taskPrompt});
+    this.setData({systemPrompt: taskPrompt+moodPrompt});
   },
 
   onLoad() {
@@ -27,7 +29,9 @@ Page({
   
     // 无论是否有 currentChatId，都更新系统提示词
     const taskPrompt = this.listRawTasks(tasks);
-    const finalPrompt = taskPrompt || this.data.systemPrompt;
+    const daymoods = wx.getStorageSync('dayMoods') || {};
+    const moodPrompt = this.listRawMoods(daymoods);
+    const finalPrompt = taskPrompt+moodPrompt || this.data.systemPrompt;
   
     if (!storage.currentChatId) {
       // 初次创建会话
@@ -51,6 +55,23 @@ Page({
       chatIds: Object.keys(storage.chats),
       systemPrompt: finalPrompt // 直接使用最新生成的提示词
     }, this.scrollToBottom);
+  },
+
+  listRawMoods(moodData) {
+    if (!moodData || Object.keys(moodData).length === 0) {
+      return "当前无心情数据";
+    }
+  
+    let output = "心情记录（原始数据）:\n\n";
+    
+    // 按日期排序后列出
+    Object.keys(moodData)
+      .sort((a, b) => new Date(a) - new Date(b))
+      .forEach(date => {
+        output += `${date}: ${moodData[date]}\n`;
+      });
+  
+    return output;
   },
 
   listRawTasks(tasks) {

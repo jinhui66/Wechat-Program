@@ -2,7 +2,7 @@
 <view class="page-container">
   <!-- 背景图 -->
   <image 
-    src="/images/index/clock-bg.jpg" 
+    src="./clock-bg.wbep" 
     class="background-image" 
     mode="aspectFill"
     wx:if="{{!bgError}}"

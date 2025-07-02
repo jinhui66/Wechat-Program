@@ -1,9 +1,8 @@
 <view class="container">
   <!-- 头部信息 -->
   <view class="header">
-    <image src="/images/index/lion.png" class="avatar"></image>
-    <text class="username">旅行者36011</text>
-    <button class="bind-account">绑定账号</button>
+    <image src="{{avatarUrl}}" class="avatar"></image>
+    <text class="username">{{nickName}}</text>
   </view>
 
   <!-- 梦境VIP区域 -->

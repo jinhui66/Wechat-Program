@@ -26,7 +26,7 @@
         <view wx:for="{{daysOfWeek}}" wx:key="index" class="day-header">{{item}}</view>
         <view wx:for="{{calendarDays}}" wx:key="index" 
               class="day {{item.isToday ? 'today' : ''}} {{!item.number ? 'empty' : ''}}"
-              class = "{{getMoodClass(item.mood)}} {{!item.number ? 'empty' : ''}}"
+            
               bindtap="handleDayTap" data-date="{{item.date}}">
           {{item.number}}
           <view class="mood" wx:if="{{item.mood}}">{{item.mood}}</view>

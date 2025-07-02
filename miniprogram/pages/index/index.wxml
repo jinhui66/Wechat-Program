@@ -1,5 +1,5 @@
 <view class="page-container">
-  <image src="/images/index/bk.jpg" mode="aspectFill" class="background-image"></image>
+  <image src="./bk.wbep" mode="aspectFill" class="background-image"></image>
   
   <view class="content">
     <!-- 头部区域 -->
