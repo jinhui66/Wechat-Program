@@ -24,7 +24,7 @@ const getMiniProgramCode = async () => {
   const { buffer } = resp;
   // 将图片上传云存储空间
   const upload = await cloud.uploadFile({
-    cloudPath: "code.png",
+    cloudPath: "code.webp",
     fileContent: buffer,
   });
   return upload.fileID;

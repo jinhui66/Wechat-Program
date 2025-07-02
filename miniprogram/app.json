@@ -2,27 +2,19 @@
   "pages": [
     "pages/index/index",
     "pages/profile/index",
-    "pages/AIchat/index"
+    "pages/schedule/index",
+    "pages/mood/index",
+    "pages/course/index",
+    "pages/alarm/index",
+    "pages/task/index",
+    "pages/AIchat/index",
+    "pages/bill/index",
+    "pages/bill/add/index",
+    "pages/bill/list/index",
+    "pages/bill/stats/index",
+    "pages/bill/profile/index"
+
   ],
-  "subpackages": [
-    {
-      "root": "pages/mood",   
-      "pages": ["index"] 
-    },
-    {
-      "root": "pages/alarm",
-      "pages": ["index"]
-    },
-    {
-      "root": "pages/task",
-      "pages": ["index"]
-    },
-    {
-      "root": "pages/bill",
-      "pages": ["index", "add/index", "list/index", "stats/index", "profile/index"]
-    }
-  ],
-  
   "window": {
     "backgroundColor": "#F6F6F6",
     "backgroundTextStyle": "light",
