@@ -1,23 +1,12 @@
 <view class="container">
   <!-- 头部信息 -->
   <view class="header">
-    <image src="/images/index/lion.webp" class="avatar"></image>
-    <text class="username">旅行者36011</text>
-    <button class="bind-account">绑定账号</button>
-  </view>
+    <image src="{{avatarUrl}}" class="avatar"></image>
+    <text class="username">{{nickName}}</text>
+    <button class="share-btn" open-type="share">
+      <text class="share-text">分享</text>
+    </button>
 
-  <!-- 梦境VIP区域 -->
-  <view class="vip-section">
-    <image src="/images/crown.webp" class="crown-icon"></image>
-    <view class="vip-text-wrapper">
-      <text class="vip-text">梦境VIP</text>
-      <text class="vip-subtext">您还不是梦境会员</text>
-    </view>
-    <button class="enter-vip">进入</button>
-    <view class="flower-count">
-      <image src="/images/flower.webp" class="flower-icon"></image>
-      <text>共0朵</text>
-    </view>
   </view>
 
   <!-- 功能模块 -->
@@ -41,4 +30,5 @@
       </navigator>
     </view>
   </view>
+
 </view>

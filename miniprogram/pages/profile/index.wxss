@@ -1,10 +1,10 @@
 /* 容器 */
 .container {
-  max-width: 480px;
-  margin: 0 auto;
+  width: 100vw;                 /* 宽度铺满整个视口 */
+  height: 100vh;                /* 高度铺满整个视口 */
+  margin: 0;                    /* 移除自动居中 */
   padding: 20px 15px;
   background-color: #f9fafb;
-  min-height: 100vh;
   box-sizing: border-box;
   font-family: "PingFang SC", "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
@@ -17,6 +17,8 @@
   margin-top: 15px;
   padding-bottom: 10px;
   border-bottom: 1px solid #e5e7eb;
+  position: relative;
+  width: 50vh; 
 }
 
 .avatar {
@@ -33,83 +35,10 @@
   color: #333;
 }
 
-.bind-account {
-  background-color: #ff6b6b;
-  color: white;
-  padding: 8px 16px;
-  border-radius: 20px;
-  font-weight: 600;
-  box-shadow: 0 2px 6px rgba(255, 107, 107, 0.5);
-  border: none;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-}
 
-.bind-account:hover {
-  background-color: #ff4c4c;
-}
-
-/* 梦境VIP */
-.vip-section {
-  display: flex;
-  align-items: center;
-  background-color: #fff4e5;
-  padding: 15px 20px;
-  margin-top: 30px;
-  border-radius: 12px;
-  box-shadow: 0 4px 12px rgba(250, 210, 140, 0.3);
-  gap: 15px;
-}
-
-.crown-icon {
-  width: 36px;
-  height: 36px;
-  flex-shrink: 0;
-}
-
-.vip-text-wrapper {
-  flex: 1;
-}
-
-.vip-text {
-  font-weight: 700;
-  font-size: 18px;
-  color: #b26f00;
-  margin-bottom: 4px;
-}
-
-.vip-subtext {
-  font-size: 14px;
-  color: #a67c00;
-}
-
-.enter-vip {
-  background-color: #b26f00;
-  color: white;
-  padding: 8px 18px;
-  border-radius: 24px;
-  font-weight: 600;
-  border: none;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-}
-
-.enter-vip:hover {
-  background-color: #8c5600;
-}
-
-.flower-count {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  font-weight: 600;
-  color: #b26f00;
-  font-size: 14px;
-}
-
-.flower-icon {
-  width: 20px;
-  height: 20px;
+.share-icon {
+  width: 24px;
+  height: 24px;
 }
 
 /* 功能模块 */
@@ -119,6 +48,7 @@
   padding: 15px 20px;
   border-radius: 14px;
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.05);
+  width: 50vh; 
 }
 
 .function-row {
@@ -152,6 +82,39 @@
   font-weight: 600;
 }
 
+/* 底部分享按钮 */
+.share-container {
+  margin-top: 40px;
+  text-align: center;
+}
+
+.share-btn {
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 16px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4px 8px;          /* 缩小内边距 */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  cursor: pointer;
+  width: auto;               /* 自动宽度，紧贴内容 */
+  max-width: 50px;
+  height: 30px;
+}
+
+.share-icon {
+  width: 18px;
+  height: 18px;
+  margin-right: 8px;
+}
+
+.share-text {
+  font-size: 15px;
+  color: #333;
+  font-weight: 500;
+}
+
 /* 小屏幕适配 */
 @media (max-width: 360px) {
   .container {
@@ -161,4 +124,13 @@
   .function-item {
     width: 22%;
   }
+  
+
+  
+  .share-icon {
+    width: 16px;
+    height: 16px;
+    margin-right: 6px;
+  }
+  
 }
