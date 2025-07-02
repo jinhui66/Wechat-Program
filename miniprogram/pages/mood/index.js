@@ -28,6 +28,7 @@ Page({
     moodStats: [],  // 心情统计数据
     monthSummary: ''// 月度总结文本
   },
+  
 
   goToToday() {
     const today = new Date();
@@ -73,6 +74,19 @@ Page({
     });
     this.loadMoods();
   },
+  getMoodClass: function(mood) {
+    if(!mood) return '';
+    
+    const moodMap = {
+      '😊 开心': 'mood-happy',
+      '😢 悲伤': 'mood-sad',
+      '😴 困倦': 'mood-sleepy',
+      '😡 生气': 'mood-angry',
+      '😌 平静': 'mood-calm'
+    };
+    
+    return moodMap[mood] || '';
+  },
 
   generateMonthDays(year, month, isPreview = false) {
     const firstDay = new Date(year, month - 1, 1);
@@ -96,12 +110,12 @@ Page({
                      month === today.getMonth() + 1 && 
                      day === today.getDate();
       
-      days.push({
-        number: day,
-        isToday,
-        date: `${year}-${month}-${day}`,
-        mood: isPreview ? '' : (this.data.dayMoods[`${year}-${month}-${day}`] || '')
-      });
+          days.push({
+      number: day,
+      isToday,
+      date: `${year}-${month}-${day}`,
+      mood: this.data.dayMoods[`${year}-${month}-${day}`] || ''
+    });
     }
     
     return days;

@@ -287,3 +287,20 @@
   line-height: 1.5;
 }
 
+/* 不同心情的边框颜色 */
+.mood-happy {
+  border-color: #FFD700 !important; /* 开心-金色 */
+}
+.mood-sad {
+  border-color: #6495ED !important; /* 悲伤-蓝色 */
+}
+.mood-sleepy {
+  border-color: #9370DB !important; /* 困倦-紫色 */
+}
+.mood-angry {
+  border-color: #FF6347 !important; /* 生气-红色 */
+}
+.mood-calm {
+  border-color: #3CB371 !important; /* 平静-绿色 */
+}
+

@@ -8,29 +8,81 @@ Page({
     chats: {},   // 聊天内容缓存
     systemPrompt: '你是一个智能助手，请用中文回答用户的问题' // 默认系统提示
   },
+  onShow() {
+    const tasks = wx.getStorageSync('tasks') || [];
+    const taskPrompt = this.listRawTasks(tasks);
+    this.setData({systemPrompt: taskPrompt});
+  },
 
   onLoad() {
     let storage = wx.getStorageSync('multi-chat') || { 
       chats: {}, 
       currentChatId: '',
-      systemPrompts: {} // 存储每个会话的系统提示
+      systemPrompts: {}
     };
-
+    
+    // 获取任务数据
+    const tasks = wx.getStorageSync('tasks') || [];
+    console.log('[DEBUG] 当前任务数据:', tasks);
+  
+    // 无论是否有 currentChatId，都更新系统提示词
+    const taskPrompt = this.listRawTasks(tasks);
+    const finalPrompt = taskPrompt || this.data.systemPrompt;
+  
     if (!storage.currentChatId) {
+      // 初次创建会话
       const newId = 'chat_' + Date.now();
       storage.currentChatId = newId;
       storage.chats[newId] = [];
-      storage.systemPrompts[newId] = this.data.systemPrompt;
-      wx.setStorageSync('multi-chat', storage);
+      storage.systemPrompts[newId] = finalPrompt; // 使用任务生成的提示词
+      console.log('[DEBUG] 创建新会话，ID:', newId);
+    } else {
+      // 已有会话时，强制更新当前会话的系统提示词
+      storage.systemPrompts[storage.currentChatId] = finalPrompt;
+      console.log('[DEBUG] 更新已有会话的系统提示词');
     }
-
+  
+    wx.setStorageSync('multi-chat', storage);
+  
     this.setData({
       currentChatId: storage.currentChatId,
       chatList: storage.chats[storage.currentChatId] || [],
       chats: storage.chats,
       chatIds: Object.keys(storage.chats),
-      systemPrompt: storage.systemPrompts[storage.currentChatId] || this.data.systemPrompt
+      systemPrompt: finalPrompt // 直接使用最新生成的提示词
     }, this.scrollToBottom);
+  },
+
+  listRawTasks(tasks) {
+    if (!tasks || tasks.length === 0) return "当前无任务数据";
+  
+    let output = "任务列表（原始数据）:\n\n";
+    
+    tasks.forEach((task, index) => {
+      output += `任务 ${index + 1}:\n` +
+        `- 名称: ${task.name || "空"}\n` +
+        `- 是否完成: ${task.completed ? "✓" : "✗"}\n` +
+        `- 截止日期: ${task.date || "无"}\n` +
+        `- 象限: ${task.quadrant} ` + 
+          `(${this.getQuadrantName(task.quadrant)})\n` +
+        `- 重复类型: ${task.repeatType} ` +
+          `(${this.getRepeatTypeName(task.repeatType)})\n` +
+        `- ID: ${task.id}\n\n`;
+    });
+  
+    return output;
+  },
+  
+  // 辅助函数：象限数字转文字
+  getQuadrantName(quadrant) {
+    const names = ["紧急重要", "不紧急重要", "紧急不重要", "不紧急不重要"];
+    return names[quadrant - 1] || "未知象限";
+  },
+  
+  // 辅助函数：重复类型转文字
+  getRepeatTypeName(type) {
+    const names = ["一次性", "每日", "每周"];
+    return names[type] || "未知类型";
   },
 
   toggleChatList() {
@@ -162,6 +214,7 @@ Page({
     messages.push({ role: 'user', content: text });
   
     try {
+      console.log(messages);
       const res = await new Promise((resolve, reject) => {
         wx.request({
           url: 'https://api.deepseek.com/v1/chat/completions',
