@@ -2,16 +2,16 @@ Page({
   data: {
     // 新增标语数据
     banners: [
-        { image: "./biaoyu1.wbep", link: "/pages/task/index" },
-        { image: "./biaoyu2.wbep", link: "/pages/bill/index" },
-        { image: "./biaoyu3.wbep", link: "/pages/mood/index" },
-        { image: "./biaoyu4.wbep", link: "/pages/alarm/index" }
+        { image: "/images/index/biaoyu1.webp", link: "/pages/task/index" },
+        { image: "/images/index/biaoyu2.webp", link: "/pages/bill/index" },
+        { image: "/images/index/biaoyu3.webp", link: "/pages/mood/index" },
+        { image: "/images/index/biaoyu4.webp", link: "/pages/alarm/index" }
       ],
     tools: [
-      { name: "自定义打卡", icon: "./daka.wbep" },
-      { name: "记账", icon: "./jizhang.wbep" },
-      { name: "每日心情", icon: "./xq.wbep" },
-      { name: "番茄钟", icon: "./alarm2.wbep" }
+      { name: "自定义打卡", icon: "/images/index/daka.webp" },
+      { name: "记账", icon: "/images/index/jizhang.webp" },
+      { name: "每日心情", icon: "/images/index/xq.webp" },
+      { name: "番茄钟", icon: "/images/index/alarm2.webp" },
     ]
   },
   // 点击标语跳转
@@ -23,10 +23,10 @@ Page({
   onToolTap(e) {
     const name = e.currentTarget.dataset.name;
     let pageMap = {
-      "每日心情": "/pages/mood/index",
       "自定义打卡": "/pages/task/index",
       "记账": "/pages/bill/index",
       "番茄钟": "/pages/alarm/index",
+      "每日心情": "/pages/mood/index"
     };
 
     const target = pageMap[name];

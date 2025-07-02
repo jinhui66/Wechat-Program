@@ -380,23 +380,23 @@ Page({
 
   getIcon(category, type) {
     const expenseMaps = {
-      餐饮: '/assets/icons/food.png',
-      交通: '/assets/icons/transport.png',
-      购物: '/assets/icons/shop.png',
-      娱乐: '/assets/icons/entertainment.png',
-      住房: '/assets/icons/housing.png',
-      通讯: '/assets/icons/communication.png',
-      医疗: '/assets/icons/medical.png',
-      教育: '/assets/icons/education.png',
-      日常用品: '/assets/icons/daily_necessities.png',
-      其他支出: '/assets/icons/other.png'
+      餐饮: '/assets/icons/food.webp',
+      交通: '/assets/icons/transport.webp',
+      购物: '/assets/icons/shop.webp',
+      娱乐: '/assets/icons/entertainment.webp',
+      住房: '/assets/icons/housing.webp',
+      通讯: '/assets/icons/communication.webp',
+      医疗: '/assets/icons/medical.webp',
+      教育: '/assets/icons/education.webp',
+      日常用品: '/assets/icons/daily_necessities.webp',
+      其他支出: '/assets/icons/other.webp'
     };
     const incomeMaps = {
-      工资: '/assets/icons/salary.png',
-      兼职: '/assets/icons/part_time.png',
-      理财: '/assets/icons/investment.png',
-      红包: '/assets/icons/red_packet.png',
-      其他收入: '/assets/icons/other_income.png'
+      工资: '/assets/icons/salary.webp',
+      兼职: '/assets/icons/part_time.webp',
+      理财: '/assets/icons/investment.webp',
+      红包: '/assets/icons/red_packet.webp',
+      其他收入: '/assets/icons/other_income.webp'
     };
 
     if (type === 'income') {
