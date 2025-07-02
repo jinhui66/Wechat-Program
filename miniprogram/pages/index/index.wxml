@@ -1,8 +1,6 @@
 <view class="page-container">
-  <!-- 背景图（使用fixed定位确保全屏显示） -->
   <image src="/images/index/bk.jpg" mode="aspectFill" class="background-image"></image>
   
-  <!-- 内容区（使用relative定位） -->
   <view class="content">
     <!-- 头部区域 -->
     <view class="header">
@@ -10,6 +8,33 @@
         <image src="/images/index/lion.png" class="avatar" />
         <view class="red-dot"></view>
       </view>
+    </view>
+
+    <!-- 新增图片轮播 -->
+    <view class="banner-container">
+      <swiper 
+        autoplay 
+        interval="3000" 
+        circular
+        indicator-dots
+        indicator-color="rgba(255,255,255,0.5)"
+        indicator-active-color="#fff"
+      >
+        <block wx:for="{{banners}}" wx:key="image">
+          <swiper-item>
+            <image 
+              src="{{item.image}}" 
+              mode="aspectFill" 
+              class="banner-image"
+              bindtap="onBannerTap"
+              data-link="{{item.link}}"
+            />
+            <view class="banner-caption">
+              <text class="caption-text">{{item.title}}</text>
+            </view>
+          </swiper-item>
+        </block>
+      </swiper>
     </view>
 
     <!-- 工具区域 -->
