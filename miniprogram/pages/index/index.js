@@ -2,9 +2,9 @@ Page({
   data: {
     // 新增标语数据
     banners: [
-        { image: "/images/index/biaoyu1.jpg", link: "/pages/mood/index" },
-        { image: "/images/index/biaoyu2.jpg", link: "/pages/alarm/index" },
-        { image: "/images/index/biaoyu3.jpg", link: "/pages/alarm/index" },
+        { image: "/images/index/biaoyu1.jpg", link: "/pages/task/index" },
+        { image: "/images/index/biaoyu2.jpg", link: "/pages/bill/index" },
+        { image: "/images/index/biaoyu3.jpg", link: "/pages/mood/index" },
         { image: "/images/index/biaoyu4.jpg", link: "/pages/alarm/index" }
       ],
     tools: [
