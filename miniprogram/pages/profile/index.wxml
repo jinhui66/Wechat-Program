@@ -9,8 +9,10 @@
   <!-- 梦境VIP区域 -->
   <view class="vip-section">
     <image src="/images/crown.png" class="crown-icon"></image>
-    <text class="vip-text">梦境VIP</text>
-    <text class="vip-subtext">您还不是梦境会员</text>
+    <view class="vip-text-wrapper">
+      <text class="vip-text">梦境VIP</text>
+      <text class="vip-subtext">您还不是梦境会员</text>
+    </view>
     <button class="enter-vip">进入</button>
     <view class="flower-count">
       <image src="/images/flower.png" class="flower-icon"></image>
@@ -38,7 +40,5 @@
         <text class="function-text">数据统计</text>
       </navigator>
     </view>
-    <!-- 其他功能行... -->
   </view>
-
 </view>

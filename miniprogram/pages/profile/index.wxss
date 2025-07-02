@@ -1,103 +1,164 @@
+/* 容器 */
 .container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+  max-width: 480px;
+  margin: 0 auto;
+  padding: 20px 15px;
+  background-color: #f9fafb;
+  min-height: 100vh;
+  box-sizing: border-box;
+  font-family: "PingFang SC", "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 
+/* 头部 */
 .header {
   display: flex;
   align-items: center;
-  margin-top: 20px;
+  gap: 15px;
+  margin-top: 15px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #e5e7eb;
 }
 
 .avatar {
-  width: 50px;
-  height: 50px;
+  width: 56px;
+  height: 56px;
   border-radius: 50%;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
 }
 
 .username {
-  margin-left: 10px;
+  flex: 1;
+  font-size: 20px;
+  font-weight: 600;
+  color: #333;
 }
 
 .bind-account {
-  background-color: #FF6347;
+  background-color: #ff6b6b;
   color: white;
-  padding: 5px 10px;
-  border-radius: 5px;
+  padding: 8px 16px;
+  border-radius: 20px;
+  font-weight: 600;
+  box-shadow: 0 2px 6px rgba(255, 107, 107, 0.5);
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
 }
 
+.bind-account:hover {
+  background-color: #ff4c4c;
+}
+
+/* 梦境VIP */
 .vip-section {
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  width: 90%;
-  margin-top: 20px;
+  background-color: #fff4e5;
+  padding: 15px 20px;
+  margin-top: 30px;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(250, 210, 140, 0.3);
+  gap: 15px;
 }
 
 .crown-icon {
-  width: 30px;
-  height: 30px;
+  width: 36px;
+  height: 36px;
+  flex-shrink: 0;
+}
+
+.vip-text-wrapper {
+  flex: 1;
 }
 
 .vip-text {
-  font-weight: bold;
+  font-weight: 700;
+  font-size: 18px;
+  color: #b26f00;
+  margin-bottom: 4px;
+}
+
+.vip-subtext {
+  font-size: 14px;
+  color: #a67c00;
 }
 
 .enter-vip {
-  background-color: #8A2BE2;
+  background-color: #b26f00;
   color: white;
-  padding: 5px 10px;
-  border-radius: 5px;
+  padding: 8px 18px;
+  border-radius: 24px;
+  font-weight: 600;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.enter-vip:hover {
+  background-color: #8c5600;
 }
 
 .flower-count {
   display: flex;
   align-items: center;
+  gap: 6px;
+  font-weight: 600;
+  color: #b26f00;
+  font-size: 14px;
 }
 
+.flower-icon {
+  width: 20px;
+  height: 20px;
+}
+
+/* 功能模块 */
 .function-section {
-  width: 90%;
-  margin-top: 20px;
+  margin-top: 35px;
+  background-color: white;
+  padding: 15px 20px;
+  border-radius: 14px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.05);
 }
 
 .function-row {
   display: flex;
-  justify-content: space-around;
+  justify-content: space-between;
 }
 
 .function-item {
+  width: 22%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   text-align: center;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.function-item:hover {
+  transform: translateY(-4px);
 }
 
 .function-icon {
-  width: 40px;
-  height: 40px;
+  width: 48px;
+  height: 48px;
+  margin-bottom: 8px;
 }
 
 .function-text {
-  margin-top: 5px;
+  font-size: 14px;
+  color: #555;
+  font-weight: 600;
 }
 
-.bottom-nav {
-  display: flex;
-  justify-content: space-around;
-  width: 100%;
-  position: fixed;
-  bottom: 0;
-  background-color: white;
-  padding: 10px 0;
-}
+/* 小屏幕适配 */
+@media (max-width: 360px) {
+  .container {
+    padding: 15px 10px;
+  }
 
-.nav-item {
-  text-align: center;
-}
-
-.nav-icon {
-  width: 30px;
-  height: 30px;
-}
-
-.nav-text {
-  margin-top: 5px;
+  .function-item {
+    width: 22%;
+  }
 }
