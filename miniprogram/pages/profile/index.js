@@ -1,3 +1,6 @@
+const getBillByIndex = require('../bill/billFunctions/getBillByIndex.js');
+const getBillCount = require('../bill/billFunctions/getBillCount.js');
+
 Page({
   data: {
     nickName: '游客',
@@ -5,7 +8,14 @@ Page({
     moodStats: [],
     monthSummary: '',
     incompleteTasks: [],
-    quadrantOptions: ['紧急且重要', '不紧急但重要', '紧急但不重要', '不紧急不重要']
+    bills: [],               // 新增：账单列表
+    quadrantOptions: ['紧急且重要', '不紧急但重要', '紧急但不重要', '不紧急不重要'],
+    incomeYear: 0,
+    expenseYear: 0,
+    incomeMonth: 0,
+    expenseMonth: 0,
+    incomeToday: 0,
+    expenseToday: 0,
   },
 
   onLoad() {
@@ -15,6 +25,7 @@ Page({
   onShow() {
     this.calculateMoodStats();
     this.loadIncompleteTasks();
+    this.loadBills();         // 新增：加载账单数据
   },
 
   getUserInfo() {
@@ -29,7 +40,52 @@ Page({
       }
     });
   },
-
+  calculateBillSummary() {
+    const bills = this.data.bills;
+  
+    const now = new Date();
+    const year = now.getFullYear();
+    const month = now.getMonth() + 1;
+    const todayStr = this.formatDate(now); // yyyy-mm-dd
+  
+    let incomeYear = 0, expenseYear = 0;
+    let incomeMonth = 0, expenseMonth = 0;
+    let incomeToday = 0, expenseToday = 0;
+  
+    bills.forEach(bill => {
+      if (!bill.createTime) return;
+  
+      const date = new Date(bill.date);
+      const y = date.getFullYear();
+      const m = date.getMonth() + 1;
+      const dStr = this.formatDate(date);
+  
+      // 收入还是支出根据字段判定，bill.type==='income'/'expense'
+      
+      if (y === year) {
+        if (bill.type == "income") incomeYear += bill.amount;
+        else expenseYear += -bill.amount;
+      }
+      if (y === year && m === month) {
+        if (bill.type == "income") incomeMonth += bill.amount;
+        else expenseMonth += -bill.amount;
+      }
+      if (dStr === todayStr) {
+        if (bill.type == "income") incomeToday += bill.amount;
+        else expenseToday += -bill.amount;
+      }
+    });
+  
+    this.setData({
+      incomeYear,
+      expenseYear,
+      incomeMonth,
+      expenseMonth,
+      incomeToday,
+      expenseToday,
+    });
+  },
+  
   calculateMoodStats() {
     const dayMoods = wx.getStorageSync('dayMoods') || {};
     const now = new Date();
@@ -102,6 +158,39 @@ Page({
     const d = date.getDate().toString().padStart(2, '0');
     return `${y}-${m}-${d}`;
   },
+
+  formatTimestamp(ts) {
+    if (!ts) return '';
+    const date = new Date(ts);
+    const y = date.getFullYear();
+    const m = (date.getMonth() + 1).toString().padStart(2, '0');
+    const d = date.getDate().toString().padStart(2, '0');
+    return `${y}-${m}-${d}`;
+  },
+
+  // 新增：加载全部账单数据
+  async loadBills() {
+    try {
+      const count = await getBillCount();
+      let bills = [];
+  
+      for (let i = 0; i < count; i++) {
+        const bill = await getBillByIndex(i);
+        if (bill) bills.push({
+          ...bill,
+          formattedDate: this.formatTimestamp(bill.createTime)
+        });
+      }
+  
+      this.setData({ bills }, () => {
+        this.calculateBillSummary();  // 计算统计数据
+      });
+  
+    } catch (err) {
+      console.error('加载账单失败', err);
+    }
+  },
+  
 
   onShareAppMessage() {
     return {

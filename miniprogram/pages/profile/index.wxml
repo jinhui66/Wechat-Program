@@ -8,38 +8,40 @@
     </button>
 
   </view>
-  <!-- 功能模块 -->
-  <view class="function-section">
-    <view class="function-row">
-      <navigator url="/pages/custom-checkin/index" class="function-item">
-        <image src="/images/custom-checkin.webp" class="function-icon"></image>
-        <text class="function-text">任务数据</text>
-      </navigator>
-      <navigator url="/pages/cards-data/index" class="function-item">
-        <image src="/images/cards-data.webp" class="function-icon"></image>
-        <text class="function-text">记账数据</text>
-      </navigator>
-      <navigator url="/pages/daily-mood/index" class="function-item">
-        <image src="/images/daily-mood.webp" class="function-icon"></image>
-        <text class="function-text">心情数据</text>
-      </navigator>
-      <navigator url="/pages/data-statistics/index" class="function-item">
-        <image src="/images/data-statistics.webp" class="function-icon"></image>
-        <text class="function-text">数据统计</text>
-      </navigator>
-    </view>
-  </view>
-  <view class="data-section">
-
-    <view class="task-container">
-      <view class="task-header">今日未完成任务</view>
-      <block wx:for="{{incompleteTasks}}" wx:key="id">
-        <view class="task-item">
-          <text class="task-name">{{item.name}}</text>
-          <text class="task-tag">#{{quadrantOptions[item.quadrant - 1]}}</text>
+    <!-- 主内容区：左右两栏 -->
+    <view class="main-content">
+    <!-- 左侧列：账单 + 任务 -->
+    <view class="left-column">
+      <!-- 账单模块 -->
+      <view class="bill-container">
+        <view class="bill-header">近期账单</view>
+        <!-- 账单统计汇总 -->
+        <view class="bill-summary">
+          <view>今年 </view>
+          <view>收入：<text class="income">¥{{incomeYear}}</text> </view>
+          <view>支出：<text class="expense">¥{{expenseYear}}</text></view>
+          <view>本月 </view>
+          <view>收入：<text class="income">¥{{incomeMonth}}</text></view>
+          <view>支出：<text class="expense">¥{{expenseMonth}}</text></view>
+          <view>今日 </view>
+          <view>收入：<text class="income">¥{{incomeToday}}</text> </view>
+          <view>支出：<text class="expense">¥{{expenseToday}}</text></view>
         </view>
-      </block>
-      <view wx:if="{{incompleteTasks.length === 0}}" class="task-empty">暂无任务</view>
+
+        <view wx:if="{{bills.length === 0}}" class="bill-empty">暂无账单</view>
+      </view>
+
+      <!-- 任务模块 -->
+      <view class="task-container">
+        <view class="task-header">今日未完成任务</view>
+        <block wx:for="{{incompleteTasks}}" wx:key="id">
+          <view class="task-item">
+            <text class="task-name">{{item.name}}</text>
+            <text class="task-tag">#{{quadrantOptions[item.quadrant - 1]}}</text>
+          </view>
+        </block>
+        <view wx:if="{{incompleteTasks.length === 0}}" class="task-empty">暂无任务</view>
+      </view>
     </view>
     <!-- 心情统计区块 -->
     <view class="mood-container">

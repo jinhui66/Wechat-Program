@@ -54,66 +54,101 @@
   font-weight: 500;
 }
 
-/* 功能模块 */
-.function-section {
-  margin-top: 35px;
-  background-color: white;
-  padding: 15px 20px;
-  border-radius: 14px;
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.05);
-  width: 50vh;
-}
-
-.function-row {
+/* 主内容区域 - 左右两栏 */
+.main-content {
   display: flex;
-  justify-content: space-between;
-}
-
-.function-item {
-  width: 22%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
-  cursor: pointer;
-  transition: transform 0.2s ease;
-}
-
-.function-item:hover {
-  transform: translateY(-4px);
-}
-
-.function-icon {
-  width: 48px;
-  height: 48px;
-  margin-bottom: 8px;
-}
-
-.function-text {
-  font-size: 14px;
-  color: #555;
-  font-weight: 600;
-}
-
-/* 横向模块区块：未完成任务 + 心情统计 */
-.data-section {
-  display: flex;
-  justify-content: flex-start;
   gap: 20rpx;
   margin-top: 40rpx;
 }
 
-/* 未完成任务模块 */
-.task-container {
-  width: 48vw;
-  margin-left: 0;              /* 靠左对齐 */
-  margin-right: auto;          /* 自动推到左边 */
+/* 左侧列：垂直排列账单和任务 */
+.left-column {
+  display: flex;
+  flex-direction: column;
+  width: 45vw;
+  gap: 20rpx;
+}
+
+/* 账单模块样式 */
+.bill-container {
   background-color: #fff;
   border-radius: 16rpx;
-  margin-top: 20rpx;
   padding: 20rpx;
-  box-shadow: 0 2rpx 10rpx rgba(0, 0, 0, 0.05);
+  box-shadow: 0 2rpx 10rpx rgba(0,0,0,0.05);
   box-sizing: border-box;
+  min-height: 150rpx; /* 你可以根据需要调整 */
+}
+
+.bill-header {
+  font-size: 32rpx;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 20rpx;
+}
+
+.bill-summary {
+  margin-bottom: 20rpx;
+  padding: 16rpx;
+  background: #fff;
+  border-radius: 16rpx;
+  box-shadow: 0 4rpx 12rpx rgba(0,0,0,0.05);
+  font-size: 28rpx;
+  color: #333;
+  line-height: 1.6;
+}
+
+.bill-summary > view {
+  margin-bottom: 10rpx;
+  font-weight: 600;
+  font-size: 30rpx;
+  color: #444;
+}
+
+.income, .expense {
+  font-weight: 700;
+  font-size: 30rpx;
+  padding: 4rpx 12rpx;
+  border-radius: 12rpx;
+  color: #fff;
+  margin-left: 8rpx;
+}
+
+.income {
+  background-color: #07C160; /* 绿色 */
+}
+
+.expense {
+  background-color: #FF4D4F; /* 红色 */
+}
+
+/* 让今年、本月、今日之间有区分 */
+.bill-summary > view:nth-child(1),
+.bill-summary > view:nth-child(4),
+.bill-summary > view:nth-child(7) {
+  font-weight: 700;
+  font-size: 32rpx;
+  margin-top: 12rpx;
+  color: #222;
+  border-bottom: 1rpx solid #eee;
+  padding-bottom: 6rpx;
+}
+
+
+.bill-empty {
+  font-size: 24rpx;
+  color: #999;
+  text-align: center;
+  margin-top: 30rpx;
+}
+
+/* 任务模块样式 (继承你之前的) */
+.task-container {
+  background-color: #fff;
+  border-radius: 16rpx;
+  padding: 20rpx;
+  box-shadow: 0 2rpx 10rpx rgba(0,0,0,0.05);
+  box-sizing: border-box;
+  min-height: 200rpx; /* 你可以调整 */
 }
 
 .task-header {
@@ -147,19 +182,15 @@
   margin-top: 30rpx;
 }
 
-/* 心情统计模块 */
-/* 心情统计主容器 */
+/* 心情统计模块宽度和样式 */
 .mood-container {
-  width: 48vw;                  /* 宽度占屏幕一半 */
-  margin-left: auto;              /* 靠左对齐 */
-  margin-right: 0;          /* 自动推到左边 */
+  width: 48vw;
   padding: 20rpx;
   background-color: #fff;
   border-radius: 16rpx;
-  margin-top: 20rpx;
-  box-shadow: 0 2rpx 10rpx rgba(0, 0, 0, 0.05);
+  box-shadow: 0 2rpx 10rpx rgba(0,0,0,0.05);
   box-sizing: border-box;
-  
+  min-height: 400rpx; /* 你可以调整 */
 }
 
 .mood-header {

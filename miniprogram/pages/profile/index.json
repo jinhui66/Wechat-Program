@@ -3,8 +3,7 @@
   "navigationBarTitleText": "个人中心",
   "enablePullDownRefresh": false,
   "backgroundColor": "#f9fafb",
-  "window": {
-    "enableShareAppMessage": true,
-    "enableShareTimeline": true
-  } 
+  "enableShareAppMessage": true,
+  "enableShareTimeline": true
+
 }

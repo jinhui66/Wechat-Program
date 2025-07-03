@@ -105,26 +105,41 @@
     margin-top: 40rpx;
   }
   
-  .tool-item {
-    width: 23%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 20rpx 0;
-    margin-bottom: 30rpx;
-    background: rgba(255, 255, 255, 0.7);
-    border-radius: 16rpx;
-    box-shadow: 0 4rpx 12rpx rgba(0, 0, 0, 0.05);
-  }
-  
-  .tool-icon {
-    width: 80rpx;
-    height: 80rpx;
-    margin-bottom: 10rpx;
-  }
-  
-  .tool-text {
-    font-size: 24rpx;
-    color: #333;
-    font-weight: 500;
-  }
+/* 工具区域：2×2 放大布局 */
+.tools {
+  display: grid;
+  grid-template-columns: 1fr 1fr; /* 每行两个 */
+  gap: 30rpx 30rpx;
+  margin-top: 40rpx;
+}
+
+/* 工具卡片放大样式 */
+.tool-item {
+  background: rgba(255, 255, 255, 0.85);
+  border-radius: 20rpx;
+  box-shadow: 0 6rpx 16rpx rgba(0, 0, 0, 0.08);
+  padding: 40rpx 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.2s ease;
+}
+
+.tool-item:active {
+  transform: scale(0.98);
+}
+
+/* 图标放大 */
+.tool-icon {
+  width: 100rpx;
+  height: 100rpx;
+  margin-bottom: 20rpx;
+}
+
+/* 文字放大 */
+.tool-text {
+  font-size: 30rpx;
+  color: #333;
+  font-weight: 600;
+}

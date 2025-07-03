@@ -38,17 +38,15 @@
     </view>
 
     <!-- 工具区域 -->
+    <!-- 工具区域 -->
     <view class="tools">
-      <view 
-        wx:for="{{tools}}" 
-        wx:key="name" 
-        class="tool-item" 
-        bindtap="onToolTap" 
-        data-name="{{item.name}}"
-      >
-        <image src="{{item.icon}}" class="tool-icon" />
-        <text class="tool-text">{{item.name}}</text>
-      </view>
+      <block wx:for="{{tools}}" wx:key="name">
+        <view class="tool-item" bindtap="onToolTap" data-name="{{item.name}}">
+          <image src="{{item.icon}}" class="tool-icon" />
+          <text class="tool-text">{{item.name}}</text>
+        </view>
+      </block>
     </view>
+
   </view>
 </view>
