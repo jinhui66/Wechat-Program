@@ -1,3 +1,0 @@
-<view class="container">
-  <button bindtap="clearAll">清空账单</button>
-</view>

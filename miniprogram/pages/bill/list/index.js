@@ -1,11 +1,12 @@
 // list.js
+
 // 获取数据库引用
 const db = wx.cloud.database();
 const _ = db.command; // 引入 command API
 
 Page({
   data: {
-    // 日历相关数据
+    // ... (原有日历相关数据保持不变)
     year: new Date().getFullYear(),
     month: new Date().getMonth() + 1,
     selectedDate: new Date().toISOString().slice(0, 10), // 默认选中今天
@@ -21,28 +22,32 @@ Page({
     startX: 0,
     transition: 'none',
 
-    // 年月日选择器数据
-    dateType: 'day', // 'year', 'month', 'day'
+    // ... (原有选择器数据保持不变)
+    dateType: 'day',
     years: [],
-    months: Array.from({ length: 12 }, (v, i) => i + 1), // 1-12月
+    months: Array.from({ length: 12 }, (v, i) => i + 1),
     selectedYearIndex: 0,
     selectedMonthIndex: 0,
     selectedDayIndex: 0,
 
-    // 收入/支出/全部 筛选
-    transactionType: 'all', // 'all', 'expense', 'income'
+    // ... (原有筛选数据保持不变)
+    transactionType: 'all',
 
     // 账单数据
-    allBills: [], // 存储所有账单
-    filteredBills: [], // 存储筛选后的账单
-    totalAmount: 0, // 当前显示账单的总金额
+    allBills: [],
+    filteredBills: [],
+    totalAmount: 0,
+
+    // --- 新增数据 ---
+    transactionMarkers: {}, // 用于存储日历上每天的收支标记
+    expandedBillId: null,   // 用于记录当前展开的账单项的 _id
   },
 
   onLoad() {
-    const { windowWidth } = wx.getSystemInfoSync();
+    const { windowWidth } = wx.getWindowInfo();
     this.setData({
       windowWidth,
-      offsetX: -windowWidth // 初始定位到当前月份
+      offsetX: -windowWidth
     }, () => {
       this.initCalendar();
       this.initDatePicker();
@@ -54,7 +59,7 @@ Page({
   },
 
   /**
-   * 日历相关方法 (保持不变，或根据需要优化)
+   * 日历相关方法
    */
   initCalendar() {
     const { year, month } = this.data;
@@ -65,10 +70,12 @@ Page({
       prevMonthDays: this.generateMonthDays(this.getAdjacentMonth(-1).year, this.getAdjacentMonth(-1).month, false),
       nextMonthDays: this.generateMonthDays(this.getAdjacentMonth(1).year, this.getAdjacentMonth(1).month, false)
     }, () => {
-      this.filterBills(); // 日历初始化完成后，根据当前选中日期更新筛选和总金额
+      this.filterBills();
     });
   },
 
+  // --- 修改: generateMonthDays ---
+  // 在生成日期时，附加上收支标记
   generateMonthDays(year, month, isPreview = false) {
     const firstDay = new Date(year, month - 1, 1);
     const lastDay = new Date(year, month, 0);
@@ -77,24 +84,27 @@ Page({
 
     let days = [];
 
-    // 填充空白格
     for (let i = 0; i < startDay; i++) {
       days.push({ number: '' });
     }
 
-    // 填充日期
     const maxDay = isPreview ? Math.min(7, daysInMonth) : daysInMonth;
     for (let day = 1; day <= maxDay; day++) {
       const dateStr = `${year}-${this.formatNumber(month)}-${this.formatNumber(day)}`;
+      const markers = this.data.transactionMarkers[dateStr] || {}; // 获取标记
       days.push({
         number: day,
         date: dateStr,
-        isSelected: dateStr === this.data.selectedDate // 添加选中状态
+        isSelected: dateStr === this.data.selectedDate,
+        hasIncome: markers.hasIncome || false,   // 附加收入标记
+        hasExpense: markers.hasExpense || false, // 附加支出标记
       });
     }
     return days;
   },
 
+  // ... (getAdjacentMonth, prepareAdjacentMonths, handleTouch..., switchTo... 等方法保持不变)
+  
   getAdjacentMonth(step) {
     let { year, month } = this.data;
     month += step;
@@ -199,90 +209,82 @@ Page({
       transition: 'transform 0.3s ease-out'
     });
   },
-
+  
   handleDayTap(e) {
     const date = e.currentTarget.dataset.date;
     if (!date) return;
     this.setData({
       selectedDate: date,
-      dateType: 'day' // 点击日期后，切换到按天筛选
+      dateType: 'day'
     }, () => {
-      this.initCalendar(); // 刷新日历以显示选中状态
-      this.filterBills(); // 重新筛选账单
+      this.initCalendar();
+      this.filterBills();
     });
   },
 
-  // 格式化数字，用于日期补零
   formatNumber(n) {
     n = n.toString();
     return n[1] ? n : '0' + n;
   },
 
   /**
-   * 年月日选择器相关方法
+   * 年月日选择器相关方法 (保持不变)
    */
   initDatePicker() {
     const currentYear = new Date().getFullYear();
-    const years = Array.from({ length: 100 }, (v, i) => currentYear - 50 + i); // 假设从当前年份前后50年
+    const years = Array.from({ length: 100 }, (v, i) => currentYear - 50 + i);
     this.setData({
       years,
       selectedYearIndex: years.indexOf(currentYear),
-      selectedMonthIndex: this.data.month - 1, // 月份是从0开始的索引
-      selectedDayIndex: new Date(this.data.selectedDate).getDate() - 1 // 日期也是从0开始的索引
+      selectedMonthIndex: this.data.month - 1,
+      selectedDayIndex: new Date(this.data.selectedDate).getDate() - 1
     });
   },
 
-  // 选择年份
   bindYearChange(e) {
     const selectedYear = this.data.years[e.detail.value];
     this.setData({
       selectedYearIndex: e.detail.value,
       year: selectedYear,
-      month: 1, // 选择年份后，月份重置为1月
+      month: 1,
       selectedMonthIndex: 0,
-      dateType: 'year', // 切换到按年筛选
-      selectedDate: `${selectedYear}-01-01` // 更新selectedDate，触发日历刷新和筛选
+      dateType: 'year',
+      selectedDate: `${selectedYear}-01-01`
     }, () => {
       this.initCalendar();
       this.filterBills();
     });
   },
 
-  // 选择月份
   bindMonthChange(e) {
     const selectedMonth = this.data.months[e.detail.value];
     this.setData({
       selectedMonthIndex: e.detail.value,
       month: selectedMonth,
-      dateType: 'month', // 切换到按月筛选
-      selectedDate: `${this.data.year}-${this.formatNumber(selectedMonth)}-01` // 更新selectedDate
+      dateType: 'month',
+      selectedDate: `${this.data.year}-${this.formatNumber(selectedMonth)}-01`
     }, () => {
       this.initCalendar();
       this.filterBills();
     });
   },
 
-  // 选择日期（用于 picker 筛选日期，与日历点击日期不同）
   bindDayChange(e) {
-    const day = parseInt(e.detail.value) + 1; // picker value is 0-indexed
+    const day = parseInt(e.detail.value) + 1;
     const selectedDate = `${this.data.year}-${this.formatNumber(this.data.month)}-${this.formatNumber(day)}`;
     this.setData({
       selectedDayIndex: e.detail.value,
       selectedDate: selectedDate,
-      dateType: 'day' // 切换到按天筛选
+      dateType: 'day'
     }, () => {
-      this.initCalendar(); // 刷新日历，确保选中状态正确显示
-      this.filterBills(); // 重新筛选账单
+      this.initCalendar();
+      this.filterBills();
     });
   },
 
-  // 选择筛选类型 (年/月/日)
   changeDateType(e) {
     const type = e.currentTarget.dataset.type;
-    this.setData({
-      dateType: type
-    }, () => {
-      // 切换类型时，确保 selectedDate 对应当前类型
+    this.setData({ dateType: type }, () => {
       const { year, month, selectedDate } = this.data;
       let newSelectedDate = selectedDate;
       if (type === 'year') {
@@ -290,34 +292,28 @@ Page({
       } else if (type === 'month') {
         newSelectedDate = `${year}-${this.formatNumber(month)}-01`;
       }
-      this.setData({ selectedDate: newSelectedDate }, () => {
-        this.filterBills();
-      });
+      this.setData({ selectedDate: newSelectedDate }, () => this.filterBills());
     });
   },
 
-  // 切换收入/支出/全部筛选
   changeTransactionType(e) {
     const type = e.currentTarget.dataset.type;
-    this.setData({
-      transactionType: type
-    }, () => {
-      this.filterBills(); // 重新筛选账单
-    });
+    this.setData({ transactionType: type }, () => this.filterBills());
   },
 
   /**
    * 账单数据相关方法
    */
+  // --- 修改: loadBills ---
+  // 加载数据后，调用 processTransactionMarkers 和 initCalendar
   async loadBills() {
-    wx.showLoading({
-      title: '加载中...',
-    });
+    wx.showLoading({ title: '加载中...' });
     try {
-      // 从云数据库获取所有账单，并按创建时间倒序排列
       const res = await db.collection('bills').orderBy('createTime', 'desc').get();
       this.setData({ allBills: res.data }, () => {
-        this.filterBills(); // 加载所有账单后进行筛选
+        this.processTransactionMarkers(); // 1. 生成标记
+        this.initCalendar();              // 2. 使用标记重新渲染日历
+        this.filterBills();               // 3. 筛选列表
       });
       wx.hideLoading();
     } catch (err) {
@@ -327,34 +323,47 @@ Page({
     }
   },
 
+  // --- 新增: processTransactionMarkers ---
+  // 处理所有账单，生成日历标记
+  processTransactionMarkers() {
+    const { allBills } = this.data;
+    const markers = {};
+    allBills.forEach(bill => {
+      const date = bill.date;
+      if (!markers[date]) {
+        markers[date] = { hasIncome: false, hasExpense: false };
+      }
+      if (bill.type === 'income') {
+        markers[date].hasIncome = true;
+      } else if (bill.type === 'expense') {
+        markers[date].hasExpense = true;
+      }
+    });
+    this.setData({ transactionMarkers: markers });
+  },
+
   filterBills() {
+    // ... (此方法保持不变)
     const { allBills, dateType, selectedDate, year, month, transactionType } = this.data;
     let filtered = [];
     let total = 0;
 
-    // 1. 根据日期类型筛选
     let dateFilteredBills = [];
     if (dateType === 'year') {
-      dateFilteredBills = allBills.filter(bill => {
-        return bill.date.startsWith(`${year}`);
-      });
+      dateFilteredBills = allBills.filter(bill => bill.date.startsWith(`${year}`));
     } else if (dateType === 'month') {
       const monthStr = this.formatNumber(month);
-      dateFilteredBills = allBills.filter(bill => {
-        return bill.date.startsWith(`${year}-${monthStr}`);
-      });
+      dateFilteredBills = allBills.filter(bill => bill.date.startsWith(`${year}-${monthStr}`));
     } else {
       dateFilteredBills = allBills.filter(bill => bill.date === selectedDate);
     }
 
-    // 2. 根据交易类型筛选
     if (transactionType === 'all') {
       filtered = dateFilteredBills;
     } else {
       filtered = dateFilteredBills.filter(bill => bill.type === transactionType);
     }
 
-    // 3. 计算总金额
     if (transactionType === 'all') {
       let incomeSum = 0;
       let expenseSum = 0;
@@ -365,10 +374,8 @@ Page({
           expenseSum += bill.amount;
         }
       });
-      total = incomeSum - expenseSum; // 显示净额
-    } else if (transactionType === 'expense') {
-      total = filtered.reduce((sum, bill) => sum + bill.amount, 0);
-    } else if (transactionType === 'income') {
+      total = incomeSum - expenseSum;
+    } else {
       total = filtered.reduce((sum, bill) => sum + bill.amount, 0);
     }
 
@@ -377,37 +384,21 @@ Page({
       totalAmount: total
     });
   },
-
-  getIcon(category, type) {
-    const expenseMaps = {
-      餐饮: '/assets/icons/food.webp',
-      交通: '/assets/icons/transport.webp',
-      购物: '/assets/icons/shop.webp',
-      娱乐: '/assets/icons/entertainment.webp',
-      住房: '/assets/icons/housing.webp',
-      通讯: '/assets/icons/communication.webp',
-      医疗: '/assets/icons/medical.webp',
-      教育: '/assets/icons/education.webp',
-      日常用品: '/assets/icons/daily_necessities.webp',
-      其他支出: '/assets/icons/other.webp'
-    };
-    const incomeMaps = {
-      工资: '/assets/icons/salary.webp',
-      兼职: '/assets/icons/part_time.webp',
-      理财: '/assets/icons/investment.webp',
-      红包: '/assets/icons/red_packet.webp',
-      其他收入: '/assets/icons/other_income.webp'
-    };
-
-    if (type === 'income') {
-      return incomeMaps[category] || incomeMaps['其他收入'];
-    } else {
-      return expenseMaps[category] || expenseMaps['其他支出'];
-    }
+  
+  // --- 新增: handleBillTap ---
+  // 处理账单条目的单击事件
+  handleBillTap(e) {
+    const id = e.currentTarget.dataset.id;
+    this.setData({
+      // 如果点击的是已经展开的项，则将 expandedBillId 设为 null (折叠)
+      // 否则，设置为当前点击项的 id (展开)
+      expandedBillId: this.data.expandedBillId === id ? null : id
+    });
   },
 
   onLongPress(e) {
-    const item = e.currentTarget.dataset.item; // 直接获取整个 item
+    // ... (此方法保持不变)
+    const item = e.currentTarget.dataset.item;
     wx.showActionSheet({
       itemList: ['删除'],
       success: res => {
@@ -419,18 +410,16 @@ Page({
   },
 
   async deleteBill(itemToDelete) {
+    // ... (此方法保持不变)
     wx.showModal({
       title: '确认删除',
       content: `删除 ${itemToDelete.category} ¥${itemToDelete.amount}?`,
-      success: async res => { // 使用 async 处理回调函数
+      success: async res => {
         if (res.confirm) {
           wx.showLoading({ title: '删除中...' });
           try {
-            // 根据 _id 删除云数据库中的记录
             await db.collection('bills').doc(itemToDelete._id).remove();
-
-            // 删除成功后，重新加载账单数据并筛选
-            this.loadBills();
+            this.loadBills(); // 删除后重新加载所有数据
             wx.hideLoading();
             wx.showToast({ title: '已删除', icon: 'success' });
           } catch (err) {
@@ -443,8 +432,8 @@ Page({
     });
   },
 
-  // 跳转到添加账单页面
   navigateToAddBill() {
+    // ... (此方法保持不变)
     wx.navigateTo({
       url: '/pages/bill/add/index'
     });

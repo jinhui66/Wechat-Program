@@ -7,15 +7,7 @@
           style="transform: translateX({{offsetX}}px); transition: {{transition}};">
 
       <view class="month" style="width: {{windowWidth}}px;">
-        <view class="header">{{prevMonth.year}}年{{prevMonth.month}}月</view>
-        <view class="days">
-          <view wx:for="{{daysOfWeek}}" wx:key="index" class="day-header">{{item}}</view>
-          <view wx:for="{{prevMonthDays}}" wx:key="index"
-                class="day {{!item.number ? 'empty' : ''}}">
-            {{item.number}}
-          </view>
         </view>
-      </view>
 
       <view class="month current" style="width: {{windowWidth}}px;">
         <view class="header">
@@ -31,21 +23,17 @@
           <view wx:for="{{calendarDays}}" wx:key="index"
                 class="day {{item.isSelected ? 'selected' : ''}} {{!item.number ? 'empty' : ''}}"
                 bindtap="handleDayTap" data-date="{{item.date}}">
-            {{item.number}}
+            <text class="day-number">{{item.number}}</text>
+            <view class="dots-container" wx:if="{{item.hasIncome || item.hasExpense}}">
+                <view class="dot expense" wx:if="{{item.hasExpense}}"></view>
+                <view class="dot income" wx:if="{{item.hasIncome}}"></view>
+            </view>
           </view>
         </view>
       </view>
 
       <view class="month" style="width: {{windowWidth}}px;">
-        <view class="header">{{nextMonth.year}}年{{nextMonth.month}}月</view>
-        <view class="days">
-          <view wx:for="{{daysOfWeek}}" wx:key="index" class="day-header">{{item}}</view>
-          <view wx:for="{{nextMonthDays}}" wx:key="index"
-                class="day {{!item.number ? 'empty' : ''}}">
-            {{item.number}}
-          </view>
         </view>
-      </view>
     </view>
   </view>
 
@@ -88,20 +76,25 @@
     </view>
   </view>
 
+
   <view class="bill-list">
     <block wx:if="{{filteredBills.length > 0}}">
-      <block wx:for="{{filteredBills}}" wx:key="index">
-        <view class="bill-item" bindlongpress="onLongPress" data-index="{{index}}">
+      <block wx:for="{{filteredBills}}" wx:key="_id">
+        <view class="bill-item {{expandedBillId === item._id ? 'expanded' : ''}}"
+              bindtap="handleBillTap"
+              bindlongpress="onLongPress"
+              data-id="{{item._id}}"
+              data-item="{{item}}">
           <view class="left">
-            <box class="icon">
-              <text class="ic {{item.type === 'income' ? 'income-amount' : 'expense-amount'}}">{{item.type === 'income' ? '收' : '支'}}</text>
-            </box>
+            <view class="icon-container"> <text class="ic {{item.type === 'income' ? 'income-amount' : 'expense-amount'}}">{{item.type === 'income' ? '收' : '支'}}</text>
+            </view>
             <view class="info">
               <text class="date-cat">{{item.date}} · {{item.category}}</text>
               <text class="amount {{item.type === 'income' ? 'income-amount' : 'expense-amount'}}">
                 {{item.amount}}¥
               </text>
-              <text wx:if="{{item.note}}" class="note">备注：{{item.note}}</text>
+              <text wx:if="{{item.note}}" class="before-note">备注：</text>
+              <text wx:if="{{item.note}}" class="note">{{item.note}}</text>
             </view>
           </view>
           <text class="right">›</text>

@@ -75,7 +75,7 @@ Page({
         type: 'pie',
         // 处理无数据情况：如果没有数据，显示一个默认的“暂无数据”饼图
         series: pieSeries.length > 0 ? pieSeries : [{ name: '暂无数据', data: 1, color: '#ccc' }],
-        width: wx.getSystemInfoSync().windowWidth,
+        width: wx.getWindowInfo().windowWidth,
         height: 300,
         dataLabel: true
       });
@@ -93,7 +93,7 @@ Page({
         }],
         yAxis: { title: '¥', format: val => val.toFixed(2) },
         xAxis: { disableGrid: true },
-        width: wx.getSystemInfoSync().windowWidth,
+        width: wx.getWindowInfo().windowWidth,
         height: 300
       });
 

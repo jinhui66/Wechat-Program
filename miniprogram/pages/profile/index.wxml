@@ -1,39 +1,27 @@
 <view class="container">
   <!-- 头部信息 -->
   <view class="header">
-    <image src="/images/index/lion.webp" class="avatar"></image>
-    <text class="username">旅行者36011</text>
-    <button class="bind-account">绑定账号</button>
-  </view>
+    <image src="{{avatarUrl}}" class="avatar"></image>
+    <text class="username">{{nickName}}</text>
+    <button class="share-btn" open-type="share">
+      <text class="share-text">分享</text>
+    </button>
 
-  <!-- 梦境VIP区域 -->
-  <view class="vip-section">
-    <image src="/images/crown.webp" class="crown-icon"></image>
-    <view class="vip-text-wrapper">
-      <text class="vip-text">梦境VIP</text>
-      <text class="vip-subtext">您还不是梦境会员</text>
-    </view>
-    <button class="enter-vip">进入</button>
-    <view class="flower-count">
-      <image src="/images/flower.webp" class="flower-icon"></image>
-      <text>共0朵</text>
-    </view>
   </view>
-
   <!-- 功能模块 -->
   <view class="function-section">
     <view class="function-row">
-      <navigator url="/pages/check-in-diary/index" class="function-item">
-        <image src="/images/check-in-diary.webp" class="function-icon"></image>
-        <text class="function-text">打卡日记</text>
+      <navigator url="/pages/custom-checkin/index" class="function-item">
+        <image src="/images/custom-checkin.webp" class="function-icon"></image>
+        <text class="function-text">任务数据</text>
       </navigator>
-      <navigator url="/pages/study-diary/index" class="function-item">
-        <image src="/images/study-diary.webp" class="function-icon"></image>
-        <text class="function-text">自习日记</text>
+      <navigator url="/pages/cards-data/index" class="function-item">
+        <image src="/images/cards-data.webp" class="function-icon"></image>
+        <text class="function-text">记账数据</text>
       </navigator>
-      <navigator url="/pages/focus-diary/index" class="function-item">
-        <image src="/images/focus-diary.webp" class="function-icon"></image>
-        <text class="function-text">专注日记</text>
+      <navigator url="/pages/daily-mood/index" class="function-item">
+        <image src="/images/daily-mood.webp" class="function-icon"></image>
+        <text class="function-text">心情数据</text>
       </navigator>
       <navigator url="/pages/data-statistics/index" class="function-item">
         <image src="/images/data-statistics.webp" class="function-icon"></image>
@@ -41,4 +29,49 @@
       </navigator>
     </view>
   </view>
+  <view class="data-section">
+
+    <view class="task-container">
+      <view class="task-header">今日未完成任务</view>
+      <block wx:for="{{incompleteTasks}}" wx:key="id">
+        <view class="task-item">
+          <text class="task-name">{{item.name}}</text>
+          <text class="task-tag">#{{quadrantOptions[item.quadrant - 1]}}</text>
+        </view>
+      </block>
+      <view wx:if="{{incompleteTasks.length === 0}}" class="task-empty">暂无任务</view>
+    </view>
+    <!-- 心情统计区块 -->
+    <view class="mood-container">
+      <view class="mood-header">本月心情统计</view>
+
+      <!-- 统计图表 -->
+      <view class="mood-chart">
+        <view wx:for="{{moodStats}}" wx:key="mood" class="chart-bar-container">
+          <view class="chart-bar" style="height: {{item.percentage * 2}}rpx; background-color: {{item.color}};"></view>
+          <view class="chart-label">{{item.mood.split(' ')[1]}}</view>
+          <view class="chart-count">{{item.count}}次</view>
+        </view>
+      </view>
+
+      <!-- 统计详情 -->
+      <view class="stats-detail">
+        <view class="detail-item" wx:for="{{moodStats}}" wx:key="mood">
+          <view class="detail-color" style="background-color: {{item.color}};"></view>
+          <view class="detail-mood">{{item.mood}}</view>
+          <view class="detail-percent">{{item.percentage}}%</view>
+          <view class="detail-count">{{item.count}}次</view>
+        </view>
+      </view>
+
+      <!-- 心情总结 -->
+      <view class="summary">
+        <view class="summary-title">本月心情总结</view>
+        <view class="summary-content">{{monthSummary}}</view>
+      </view>
+    </view>
+
+
+  </view>
+
 </view>
