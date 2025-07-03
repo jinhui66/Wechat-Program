@@ -1,3 +1,4 @@
+// 获取数据库引用
 Page({
   data: {
     chatList: [],
@@ -16,13 +17,16 @@ Page({
     this.setData({systemPrompt: taskPrompt+moodPrompt});
   },
 
-  onLoad() {
+  async onLoad() {
     let storage = wx.getStorageSync('multi-chat') || { 
       chats: {}, 
       currentChatId: '',
       systemPrompts: {}
     };
     
+    const billsPrompts = await this.getFormattedBills();
+
+    console.log("Bills",billsPrompts);
     // 获取任务数据
     const tasks = wx.getStorageSync('tasks') || [];
     console.log('[DEBUG] 当前任务数据:', tasks);
@@ -31,7 +35,7 @@ Page({
     const taskPrompt = this.listRawTasks(tasks);
     const daymoods = wx.getStorageSync('dayMoods') || {};
     const moodPrompt = this.listRawMoods(daymoods);
-    const finalPrompt = taskPrompt+moodPrompt || this.data.systemPrompt;
+    const finalPrompt = taskPrompt+moodPrompt+billsPrompts || this.data.systemPrompt;
   
     if (!storage.currentChatId) {
       // 初次创建会话
@@ -55,6 +59,37 @@ Page({
       chatIds: Object.keys(storage.chats),
       systemPrompt: finalPrompt // 直接使用最新生成的提示词
     }, this.scrollToBottom);
+  },
+
+  async getFormattedBills() {
+    try {
+      const db = wx.cloud.database();
+      const res = await db.collection('bills')
+                        .orderBy('date', 'desc')
+                        .orderBy('createTime', 'desc')
+                        .get();
+      
+      if (!res.data || res.data.length === 0) {
+        return "当前没有账单记录";
+      }
+  
+      // 格式化每条账单记录
+      return res.data.map(bill => {
+        const date = bill.date || '日期未知';
+        const type = bill.type === 'income' ? '收入' : '支出';
+        const category = bill.category || '未分类';
+        const amount = bill.amount?.toFixed(2) || '0.00';
+        const note = bill.note ? ` [备注：${bill.note}]` : '';
+  
+        // 示例输出格式：
+        // 2025-07-03 支出 餐饮 ¥75.00 [备注：555]
+        return `${date} ${type} ${category} ¥${amount}${note}`;
+      }).join('\n');
+  
+    } catch (error) {
+      console.error('获取账单失败:', error);
+      return `获取账单失败: ${error.errMsg || error.message}`;
+    }
   },
 
   listRawMoods(moodData) {
