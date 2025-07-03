@@ -1,11 +1,8 @@
 <view class="chat-container">
   <!-- 右上角切换会话按钮 -->
   <view class="header">
-    <view class="header-actions">
-      <button class="btn-new-chat" bindtap="createNewChat">新建聊天</button>
-      <button class="btn-toggle-list" bindtap="toggleChatList">切换会话</button>
-    </view>
-
+      <button class="btn" bindtap="createNewChat">新建聊天</button>
+      <button class="btn" bindtap="toggleChatList">切换会话</button>
   </view>
 
   <!-- 会话列表弹窗 -->

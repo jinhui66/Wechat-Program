@@ -7,7 +7,20 @@
   background-color: #f7f8fa;
   overflow-y: scroll;
 }
-
+.btn {
+  background: #ffffff;
+  border: 1px solid #b4c5e7;
+  border-radius: 16px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4px 8px;
+  box-shadow: 0 2px 4px rgba(212, 61, 61, 0.05);
+  cursor: pointer;
+  width: auto;
+  max-width: 50px;
+  height: 40px;
+}
 .empty-chat {
   flex: 1;
   justify-content: center;

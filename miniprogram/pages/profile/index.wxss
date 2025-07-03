@@ -1,8 +1,7 @@
 /* 容器 */
 .container {
-  width: 100vw;                 /* 宽度铺满整个视口 */
-  height: 100vh;                /* 高度铺满整个视口 */
-  margin: 0;                    /* 移除自动居中 */
+  width: 100vw;
+  min-height: 100vh;
   padding: 20px 15px;
   background-color: #f9fafb;
   box-sizing: border-box;
@@ -17,8 +16,7 @@
   margin-top: 15px;
   padding-bottom: 10px;
   border-bottom: 1px solid #e5e7eb;
-  position: relative;
-  width: 50vh; 
+  width: 50vh;
 }
 
 .avatar {
@@ -35,10 +33,25 @@
   color: #333;
 }
 
+.share-btn {
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 16px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4px 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  cursor: pointer;
+  width: auto;
+  max-width: 50px;
+  height: 30px;
+}
 
-.share-icon {
-  width: 24px;
-  height: 24px;
+.share-text {
+  font-size: 15px;
+  color: #333;
+  font-weight: 500;
 }
 
 /* 功能模块 */
@@ -48,7 +61,7 @@
   padding: 15px 20px;
   border-radius: 14px;
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.05);
-  width: 50vh; 
+  width: 50vh;
 }
 
 .function-row {
@@ -82,55 +95,173 @@
   font-weight: 600;
 }
 
-/* 底部分享按钮 */
-.share-container {
-  margin-top: 40px;
-  text-align: center;
+/* 横向模块区块：未完成任务 + 心情统计 */
+.data-section {
+  display: flex;
+  justify-content: flex-start;
+  gap: 20rpx;
+  margin-top: 40rpx;
 }
 
-.share-btn {
-  background: #ffffff;
-  border: 1px solid #e5e7eb;
-  border-radius: 16px;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  padding: 4px 8px;          /* 缩小内边距 */
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
-  cursor: pointer;
-  width: auto;               /* 自动宽度，紧贴内容 */
-  max-width: 50px;
-  height: 30px;
+/* 未完成任务模块 */
+.task-container {
+  width: 48vw;
+  margin-left: 0;              /* 靠左对齐 */
+  margin-right: auto;          /* 自动推到左边 */
+  background-color: #fff;
+  border-radius: 16rpx;
+  margin-top: 20rpx;
+  padding: 20rpx;
+  box-shadow: 0 2rpx 10rpx rgba(0, 0, 0, 0.05);
+  box-sizing: border-box;
 }
 
-.share-icon {
-  width: 18px;
-  height: 18px;
-  margin-right: 8px;
-}
-
-.share-text {
-  font-size: 15px;
+.task-header {
+  font-size: 32rpx;
+  font-weight: bold;
   color: #333;
-  font-weight: 500;
+  margin-bottom: 20rpx;
 }
 
-/* 小屏幕适配 */
-@media (max-width: 360px) {
-  .container {
-    padding: 15px 10px;
-  }
+.task-item {
+  display: flex;
+  justify-content: space-between;
+  padding: 12rpx 0;
+  border-bottom: 1rpx solid #f0f0f0;
+}
 
-  .function-item {
-    width: 22%;
-  }
-  
+.task-name {
+  font-size: 26rpx;
+  color: #444;
+}
 
+.task-tag {
+  font-size: 22rpx;
+  color: #999;
+}
+
+.task-empty {
+  font-size: 24rpx;
+  color: #999;
+  text-align: center;
+  margin-top: 30rpx;
+}
+
+/* 心情统计模块 */
+/* 心情统计主容器 */
+.mood-container {
+  width: 48vw;                  /* 宽度占屏幕一半 */
+  margin-left: auto;              /* 靠左对齐 */
+  margin-right: 0;          /* 自动推到左边 */
+  padding: 20rpx;
+  background-color: #fff;
+  border-radius: 16rpx;
+  margin-top: 20rpx;
+  box-shadow: 0 2rpx 10rpx rgba(0, 0, 0, 0.05);
+  box-sizing: border-box;
   
-  .share-icon {
-    width: 16px;
-    height: 16px;
-    margin-right: 6px;
-  }
-  
+}
+
+.mood-header {
+  font-size: 32rpx;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 20rpx;
+  text-align: left;
+}
+
+.mood-chart {
+  display: flex;
+  justify-content: space-around;
+  align-items: flex-end;
+  height: 200rpx;
+  margin-bottom: 30rpx;
+  border-bottom: 1rpx solid #eee;
+  padding-bottom: 20rpx;
+}
+
+.chart-bar-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 15%;
+}
+
+.chart-bar {
+  width: 80%;
+  min-height: 1px;
+  transition: height 0.5s ease;
+  border-radius: 8rpx 8rpx 0 0;
+}
+
+.chart-label {
+  font-size: 24rpx;
+  color: #666;
+  margin-top: 10rpx;
+  text-align: center;
+  white-space: nowrap;
+}
+
+.chart-count {
+  font-size: 20rpx;
+  color: #999;
+}
+
+.stats-detail {
+  margin-top: 20rpx;
+}
+
+.detail-item {
+  display: flex;
+  align-items: center;
+  padding: 15rpx 0;
+  border-bottom: 1rpx solid #f5f5f5;
+}
+
+.detail-color {
+  width: 30rpx;
+  height: 30rpx;
+  border-radius: 6rpx;
+  margin-right: 15rpx;
+}
+
+.detail-mood {
+  flex: 1;
+  font-size: 28rpx;
+  color: #333;
+}
+
+.detail-percent {
+  width: 80rpx;
+  text-align: right;
+  font-size: 28rpx;
+  color: #07C160;
+  margin-right: 20rpx;
+}
+
+.detail-count {
+  width: 80rpx;
+  text-align: right;
+  font-size: 28rpx;
+  color: #666;
+}
+
+.summary {
+  margin-top: 30rpx;
+  padding: 20rpx;
+  background-color: #f7f7f8;
+  border-radius: 12rpx;
+}
+
+.summary-title {
+  font-size: 28rpx;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 10rpx;
+}
+
+.summary-content {
+  font-size: 26rpx;
+  color: #666;
+  line-height: 1.5;
 }
